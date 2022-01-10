@@ -1,0 +1,14 @@
+<nav id="menu">
+  <ul>
+    <li *ngIf="loginService.isUserLoggedIn()"><a routerLink="/home" class="fa fa-home">Home</a></li>
+    <li *ngIf="!loginService.isUserLoggedIn()"><a routerLink="/login">Login</a></li>
+    <li *ngIf="loginService.isUserLoggedIn()">
+      <a  class="fa fa-gear">
+        <mat-select >
+          <mat-option>Info</mat-option>
+        </mat-select>
+      </a>
+    </li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>

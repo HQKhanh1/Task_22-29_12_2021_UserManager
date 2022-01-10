@@ -1,6 +1,8 @@
 package com.example.taks_2229_2021_user.controller;
 
-import com.example.taks_2229_2021_user.exception.ThrowException;
+import com.example.taks_2229_2021_user.exception.MailException;
+import com.example.taks_2229_2021_user.exception.UsernameException;
+import com.example.taks_2229_2021_user.exception.UsernameExitException;
 import com.example.taks_2229_2021_user.model.Users;
 import com.example.taks_2229_2021_user.model.utils.PagingHeaders;
 import com.example.taks_2229_2021_user.model.utils.PagingResponse;
@@ -33,14 +35,16 @@ public class UserController {
     @Autowired
     private UserSearch userSearch;
 
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/page")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        return new ResponseEntity<>(usersService.createUser(userDto), HttpStatus.CREATED);
+    @GetMapping("/login")
+    public String login() {
+        return "authenticated successfully";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/page")
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(usersService.createUserMap(userDto), HttpStatus.CREATED);
+    }
+
     @GetMapping("/page")
     public UserResponse getAllUsers(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -51,38 +55,32 @@ public class UserController {
         return usersService.getAllUsersPage(pageNo, pageSize, sortBy, sortDir);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("user-not-pagination")
-    public List<Users> getAllUser(){
-        return usersService.getAllUsers();
+    public ResponseEntity<Iterable<Users>> getAllUser() {
+        usersService.getAllUsers();
+        return new ResponseEntity<>(usersService.getAllUsers(), HttpStatus.OK);
     }
+
     @GetMapping("/{username}")
-    public Users getUserByUsername(@PathVariable("username") String name) throws ThrowException {
-        return usersService.getUserByUserName(name);
+    public ResponseEntity<Users> getUserByUsername(@PathVariable("username") String name) throws UsernameException {
+        return new ResponseEntity<>(usersService.getUserByUserName(name), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("")
-    public String createUser(@RequestBody @Valid Users users) throws ThrowException {
-        usersService.createUser(users);
-        return "Create successfully";
+    public ResponseEntity<Users> createUser(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
+        return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/{username}")
-    public String updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws ThrowException {
-        usersService.updateUser(name, users);
-        return "Update successfully";
+    public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException {
+        return new ResponseEntity<>(usersService.updateUser(name, users), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/{username}")
-    public String deleteUser(@PathVariable("username") String name) throws ThrowException {
-        usersService.deleteUser(name);
-        return "Delete successfully";
+    public ResponseEntity<Users> deleteUser(@PathVariable("username") String name) throws UsernameException {
+        return new ResponseEntity<>(usersService.deleteUser(name), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @Transactional
     @GetMapping(value = "/mapsearch", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -108,5 +106,6 @@ public class UserController {
         headers.set(PagingHeaders.PAGE_TOTAL.getName(), String.valueOf(response.getPageTotal()));
         return headers;
     }
+
 
 }

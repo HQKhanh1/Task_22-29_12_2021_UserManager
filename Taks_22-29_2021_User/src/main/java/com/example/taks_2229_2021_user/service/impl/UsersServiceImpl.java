@@ -1,6 +1,8 @@
 package com.example.taks_2229_2021_user.service.impl;
 
-import com.example.taks_2229_2021_user.exception.ThrowException;
+import com.example.taks_2229_2021_user.exception.MailException;
+import com.example.taks_2229_2021_user.exception.UsernameException;
+import com.example.taks_2229_2021_user.exception.UsernameExitException;
 import com.example.taks_2229_2021_user.model.Users;
 import com.example.taks_2229_2021_user.payload.UserDto;
 import com.example.taks_2229_2021_user.payload.UserResponse;
@@ -29,6 +31,7 @@ public class UsersServiceImpl implements UsersService {
         userDto.setFirstname(users.getFirstname());
         userDto.setLastname(users.getLastname());
         userDto.setEmail(users.getEmail());
+        userDto.setRoleName(users.getRoleName());
         return userDto;
     }
 
@@ -39,11 +42,12 @@ public class UsersServiceImpl implements UsersService {
         users.setFirstname(userDto.getFirstname());
         users.setLastname(userDto.getLastname());
         users.setEmail(userDto.getEmail());
+        users.setRoleName(userDto.getRoleName());
         return users;
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUserMap(UserDto userDto) {
         // convert DTO to entity
         Users newUser = usersRepository.save(mapToEntity(userDto));
         // convert entity to DTO
@@ -63,7 +67,7 @@ public class UsersServiceImpl implements UsersService {
         // get content for page object
         List<Users> listOfPosts = users.getContent();
 
-        List<UserDto> content= listOfPosts.stream().map(this::mapToDTO).collect(Collectors.toList());
+        List<UserDto> content = listOfPosts.stream().map(this::mapToDTO).collect(Collectors.toList());
 
         UserResponse userResponse = new UserResponse();
         userResponse.setUsers(content);
@@ -75,58 +79,64 @@ public class UsersServiceImpl implements UsersService {
 
         return userResponse;
     }
+
     @Override
-    public List<Users> getAllUsers(){
+    public List<Users> getAllUsers() {
         return usersRepository.findAll();
     }
+
     @Override
-    public Users getUserByUserName(String name) throws ThrowException {
+    public Users getUserByUserName(String name) throws UsernameException {
         Users users = usersRepository.findById(name).orElse(null);
         if (users == null) {
-            throw new ThrowException("User not found");
+            throw new UsernameException("User not found");
         } else {
             return usersRepository.findById(name).orElse(null);
         }
     }
 
     @Override
-    public void createUser(Users users) throws ThrowException {
+    public Users createUser(Users users) throws UsernameExitException, MailException {
         checkEmailOrUsername(users);
         usersRepository.save(users);
-
+        return users;
     }
 
     @Override
-    public void updateUser(String userName, Users users) throws ThrowException {
+    public Users updateUser(String userName, Users users) throws UsernameException {
         Users usersS = usersRepository.findById(userName).orElse(null);
         if (usersS == null) {
-            throw new ThrowException("User not found");
+            throw new UsernameException("User not found");
         } else {
             usersS = new Users(users.getUsername(), users.getPassword(), users.getFirstname(), users.getLastname(), users.getEmail());
             usersRepository.save(usersS);
+            return usersS;
         }
     }
 
     @Override
-    public void deleteUser(String userName) throws ThrowException {
+    public Users deleteUser(String userName) throws UsernameException {
         Users usersS = usersRepository.findById(userName).orElse(null);
         if (usersS == null) {
-            throw new ThrowException("User not found");
+            throw new UsernameException("User not found");
         } else {
             usersRepository.delete(usersS);
+            return usersS;
         }
     }
+
     @Override
     public List<Users> getAllVaccineDTONotPagination() {
         return usersRepository.findAll();
     }
-    private void checkEmailOrUsername(Users users) throws ThrowException {
+
+    private void checkEmailOrUsername(Users users) throws MailException, UsernameExitException {
         for (Users userCheck : new ArrayList<>(usersRepository.findAll())) {
             if (users.getEmail().equals(userCheck.getEmail())) {
-                throw new ThrowException("User with email: " + users.getEmail() + " already existed");
+                throw new MailException("User with email: " + users.getEmail() + " already existed");
             }
             if (users.getUsername().equals(userCheck.getUsername())) {
-                throw new ThrowException("Username: " + users.getUsername() + " already existed");
+                throw new UsernameExitException("Username: " + users.getUsername() + " already existed");
             }
         }
     }

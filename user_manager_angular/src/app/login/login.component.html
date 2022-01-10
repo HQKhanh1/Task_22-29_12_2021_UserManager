@@ -1,0 +1,29 @@
+<div class="login-box">
+  <div class="lb-header">
+    <a href="#" class="active" id="login-box-link">Login</a>
+    <a href="/signup" id="signup-box-link">Sign Up</a>
+  </div>
+  <form class="user-login" [formGroup]="formLogin" (ngSubmit)="checkLogin()">
+    <div class="u-form-group">
+      <input type="text" placeholder="Username" formControlName="username"/>
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formLogin.get('username')?.errors?.['required'] && submitted">
+        Username is required</div>
+    </div>
+    <div class="u-form-group">
+      <input type="password" placeholder="Password" formControlName="password"/>
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formLogin.get('username')?.errors?.['required'] && submitted">
+        Password is required</div>
+    </div>
+    <div class="u-form-group">
+      <button type="submit" class="btn btn-primary deep-purple btn-block " value="Login"
+        >Submit</button>
+    </div>
+    <div class="u-form-group">
+      <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+  </form>
+</div>

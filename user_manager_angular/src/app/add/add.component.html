@@ -1,0 +1,69 @@
+<form class="signup-box" [formGroup]="formCreate" (ngSubmit)="signUp()">
+  <div class="lb-header">
+    <a>CREATE USER</a>
+  </div>
+  <div class="signup">
+    <div class="u-form-group">
+      <input type="text" placeholder="Username" formControlName="username" />
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formCreate.get('username')?.errors?.['required'] && submitted">
+        Username is required</div>
+    </div>
+    <div class="u-form-group">
+      <input type="text-name" placeholder="Firstname" formControlName="firstname" />
+      &nbsp;
+      <input type="text-name" placeholder="Lastname" formControlName="lastname" />
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formCreate.get('firstname')?.errors && submitted">
+        Firstname is required</div>
+      <div class="error" *ngIf="formCreate.get('lastname')?.errors && submitted">
+        Lastname is required</div>
+    </div>
+    <div class="u-form-group">
+      <input type="email" placeholder="Email" email formControlName="email" />
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formCreate.get('email')?.errors?.['required'] && submitted">
+        Email is required</div>
+      <div class="error" *ngIf="formCreate.get('email')?.errors?.['email'] && submitted">
+        Email is invalidate</div>
+    </div>
+    <div class="u-form-group">
+      <input type="password" placeholder="Password" formControlName="pass" />
+      &nbsp;
+      <input type="password" placeholder="Confirm Password" formControlName="confPass" />
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="formCreate.get('pass')?.errors?.['required'] && submitted">
+        Password is required
+      </div>
+      <div class="error" *ngIf="formCreate.get('confPass')?.errors?.['required'] && submitted">
+        Confirm Password is required
+      </div>
+      <div class="error" *ngIf="!this.checkPasswords() && submitted">
+        Password and confirm password do not match
+      </div>
+    </div>
+    <div class="u-form-group">
+      <mat-select placeholder="Select Role" [(ngModel)]="selectRole" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="onChange()">
+        <mat-option style="text-align: center;" *ngFor="let role of optionsRole" [value]="role.value">
+          {{role.nameValue}}</mat-option>
+      </mat-select>
+    </div>
+    <div class="u-form-group">
+      <div class="error" *ngIf="!selectRole && submitted">
+        Role requied</div>
+    </div>
+    <br>
+    <div class="u-form-group">
+      <button type="submit" class="btn btn-primary float-left" style="background-color: rgb(63, 180, 63);">Add</button>
+      <button type="button" (click)="goBack()" class="btn btn-warning float-right"
+        style="background-color: rgb(87, 87, 87);">
+        Back
+      </button>
+    </div>
+  </div>
+</form>

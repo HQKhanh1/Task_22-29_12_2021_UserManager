@@ -1,0 +1,99 @@
+<div class="container">
+  <div>
+    <h2 style="text-align: center">USER MANAGER</h2>
+  </div>
+  <div class="container-fluid">
+    <form [formGroup]="searchUser" (ngSubmit)="search()">
+      <div class=" search row d-flex justify-content-md-end mb-4 text-right float-right">
+        <!--                <div class="col-xl-2 col-12">-->
+        <!--                </div>-->
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: center">
+          <label for="username">Username</label>
+          <input id="username" class="form-control" type="text" formControlName="username">
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <div style="text-align: center">
+            <label for="firstname">Firstname</label>
+          </div>
+          <div>
+            <input type="text" id="firstname" class="form-control" formControlName="firstname">
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <div style="text-align: center">
+            <label for="lastname">Lastname</label>
+          </div>
+          <div>
+            <input type="text" id="lastname" class="form-control" formControlName="lastname">
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-3 form-group" style="text-align: right">
+          <div style="text-align: center">
+            <label for="email">Email</label>
+          </div>
+          <div>
+            <input type="text" id="email" class="form-control" formControlName="email">
+          </div>
+        </div>
+        <div class="col-xl-2 col-4" style="text-align: right">
+          <br>
+          <button class="btn btn-success mt-xl-2"><i class="fa fa-search"></i>Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <button class="btn btn-success" routerLink="/add"><i class="fa fa-plus"></i>Add User</button>
+  </div>
+  <div class="container tab">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="bg-table-header">
+          <th scope="col">Username</th>
+          <th scope="col">Full name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody style="font-size: 16px;text-align: center">
+        <tr *ngFor="let data of user">
+          <td style="text-align: left">{{data.username}}</td>
+          <td style="text-align: left">{{data.firstname}} {{ data.lastname }}</td>
+          <td style="text-align: left">{{data.email}}</td>
+          <td class="text-center">
+            <button class='btn btn-primary' (click)="detail(data.username)">Detail</button> &nbsp;
+            <button class='btn btn-danger' (click)="delete(data)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--    phân trang-->
+  <div class="mt-3">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-md-end justify-content-center">
+        <li class="page-item"><a class="page-link" (click)="firtPage()">First page</a></li>
+        <li class="page-item"><a class="page-link" (click)="prviousPage()">Previous page</a></li>
+
+        <li class="page-item col-md-1 col-2  px-0">
+
+          <div class="input-group">
+            <input type="number" min="{{this.min}}" [max]="totalPagination" class="form-control text-right rounded-0"
+              placeholder="2" aria-label="Username" aria-describedby="basic-addon1" value="{{indexPagination}}"
+              [value]="indexPagination" (change)="indexPaginationChage(getValue($event))">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">{{totalPagination}}</span>
+            </div>
+          </div>
+        </li>
+        <li class="page-item">
+          <button class="btn btn-primary rounded-0" (click)="findPaginnation()">Go</button>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="nextPage()">Next page</a></li>
+        <li class="page-item"><a class="page-link" (click)="lastPage()">Last page</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

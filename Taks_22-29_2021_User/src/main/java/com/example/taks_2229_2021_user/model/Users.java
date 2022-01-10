@@ -19,6 +19,14 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "demouser")
 public class Users extends AuditorUser<String> {
+    public Users(String username, String password, String firstname, String lastname, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
+
     @Id
     @NotBlank(message = "Username can not be empty")
     @Column(name = "username")
@@ -41,5 +49,9 @@ public class Users extends AuditorUser<String> {
     @Column(name = "email")
     @Email(message = "Email is not valid")
     private String email;
+
+    @NotBlank(message = "Role name can not be empty")
+    @Column(name = "role_name")
+    private String roleName;
 
 }

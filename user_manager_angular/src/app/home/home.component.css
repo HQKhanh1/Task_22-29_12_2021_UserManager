@@ -1,0 +1,16 @@
+#container{
+
+}
+div .tab{
+    overflow-x: scroll;
+  }
+  .table{
+    width: 2050px;
+    height: 100%;
+  }
+
+  .bg-table-header{
+    text-align: center;
+    background-color:rgb(158,207,251) !important;
+  }
+
