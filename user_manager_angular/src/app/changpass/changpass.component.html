@@ -1,0 +1,32 @@
+<form class="changepass-box">
+  <div class="lb-header">
+    <a>Change Password</a>
+  </div>
+  <!-- formCCheckCurrentPass -->
+  <form *ngIf="check === false" class="changepass" [formGroup]="formCurrentPass" (ngSubmit)="checkPass()">
+    <div class="u-form-group">
+      <!-- <mat-form-field> -->
+        <!-- <mat-label>Current password:</mat-label> -->
+        <input type="password" placeholder="Current password:" formControlName="currentPass" />
+      <!-- </mat-form-field> -->
+    </div>`
+    <div class="alert-danger" *ngIf="formCurrentPass.get('currentPass')?.errors?.['required'] && submittedCurrentPass">
+      Current Password is required</div>
+    <div class="u-form-group">
+      <button type="submit" [disabled]="formCurrentPass.valid" class="btn btn-success float-left">Enter</button>
+    </div>
+  </form>
+  <!-- formchangePass -->
+  <!-- <div *ngIf="check === true" class="changepass" [formGroup]="formChangePass" (ngSubmit)="changePassword()">
+    <div class="u-form-group">
+      <input type="password" placeholder="New password:" formControlName="changePass" />
+    </div>
+    <div class="u-form-group">
+      <input type="password" placeholder="Confirm new password:" formControlName="changePassConf" />
+    </div>
+    <div class="u-form-group">
+      <button type="submit" class="btn btn-success float-left">Enter</button>
+    </div>
+  </div> -->
+
+</form>

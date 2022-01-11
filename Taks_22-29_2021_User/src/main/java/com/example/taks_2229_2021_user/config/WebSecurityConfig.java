@@ -24,9 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/**").fullyAuthenticated()
                 .antMatchers(HttpMethod.OPTIONS, "/user/**").hasAnyRole("ADMIN")
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+                .and().headers().frameOptions().sameOrigin().and()
+                .httpBasic().and().formLogin();
+        ;
     }
 
     @Override

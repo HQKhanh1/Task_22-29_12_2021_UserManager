@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,6 +54,31 @@ public class UsersServiceImpl implements UsersService {
         Users newUser = usersRepository.save(mapToEntity(userDto));
         // convert entity to DTO
         return mapToDTO(newUser);
+    }
+
+    @Override
+    public Boolean checkPassword(String password, String username) throws UsernameException {
+        Users users = usersRepository.findById(username).orElse(null);
+        if (users == null) {
+            throw new UsernameException("User not found");
+        } else {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String comparePassword = users.getPassword();
+            return passwordEncoder.matches(password, comparePassword);
+        }
+
+    }
+
+    @Override
+    public Users changePassword(String password, String username) throws UsernameException {
+        Users usersChange = usersRepository.findById(username).orElse(null);
+        if (usersChange == null) {
+            throw new UsernameException("User not found");
+        } else {
+            usersChange.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+            usersRepository.save(usersChange);
+            return usersChange;
+        }
     }
 
     @Override
@@ -108,7 +135,7 @@ public class UsersServiceImpl implements UsersService {
         if (usersS == null) {
             throw new UsernameException("User not found");
         } else {
-            usersS = new Users(users.getUsername(), users.getPassword(), users.getFirstname(), users.getLastname(), users.getEmail());
+            usersS = new Users(users.getUsername(), users.getPassword(), users.getFirstname(), users.getLastname(), users.getEmail(), users.getRoleName());
             usersRepository.save(usersS);
             return usersS;
         }

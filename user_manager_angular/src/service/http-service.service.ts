@@ -14,7 +14,7 @@ import { Observable, throwError, catchError } from 'rxjs';
 })
 export class HttpServiceService {
   private REST_API_SERVER = 'http://localhost:8080/user';
-  headers : any = sessionStorage.getItem('basicauth');
+  headers: any = sessionStorage.getItem('basicauth');
   private httpOptions = {
     headers: new HttpHeaders({
       Authorization: this.headers,
@@ -30,7 +30,8 @@ export class HttpServiceService {
 
   public getAllUserNotPagination(): Observable<any> {
     return this.httpClient.get<any>(
-      this.REST_API_SERVER + '/user-not-pagination', this.httpOptions
+      this.REST_API_SERVER + '/user-not-pagination',
+      this.httpOptions
     );
   }
   public search(
@@ -57,7 +58,18 @@ export class HttpServiceService {
     return headers;
   }
   public getUserByUsername(username: string): Observable<any> {
-    return this.httpClient.get<any>(this.REST_API_SERVER + '/' + username, this.httpOptions);
+    return this.httpClient.get<any>(
+      this.REST_API_SERVER + '/' + username,
+      this.httpOptions
+    );
+  }
+  public update(user: User): Observable<HttpResponse<any>> {
+    console.log('API USER: ', JSON.stringify(user));
+    return this.httpClient.put<any>(
+      this.REST_API_SERVER + '/' + user.username,
+      JSON.stringify(user),
+      this.httpOptions
+    );
   }
   public delete(user: User): Observable<any> {
     console.log('url: ', this.REST_API_SERVER + '/' + user.username);

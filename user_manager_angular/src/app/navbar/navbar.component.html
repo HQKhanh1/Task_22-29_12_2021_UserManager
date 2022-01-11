@@ -1,14 +1,22 @@
-<nav id="menu">
-  <ul>
-    <li *ngIf="loginService.isUserLoggedIn()"><a routerLink="/home" class="fa fa-home">Home</a></li>
-    <li *ngIf="!loginService.isUserLoggedIn()"><a routerLink="/login">Login</a></li>
-    <li *ngIf="loginService.isUserLoggedIn()">
-      <a  class="fa fa-gear">
-        <mat-select >
-          <mat-option>Info</mat-option>
-        </mat-select>
-      </a>
-    </li>
-  </ul>
-</nav>
+<mat-toolbar color="primary">
+  <a class="fa fa-home fa-3x" mat-button routerLink="/home"></a>
+  <div class="header">
+  </div>
+  <!-- <a mat-button routerLink="/home">Home</a> -->
+  <a *ngIf="!this.loginService.isUserLoggedIn()" mat-button routerLink="/login">Login/Signup</a>
+  <button *ngIf="this.loginService.isUserLoggedIn()" mat-button [matMenuTriggerFor]="afterMenu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #afterMenu="matMenu" xPosition="after">
+    <button class="fa fa-home fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item routerLink="/home">
+      Home</button>
+    <button class="fa fa-info-circle fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item
+      (click)="selectItem()">
+      {{username}}</button>
+    <button class="fa fa-key fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="changePass()"> Change
+      Password</button>
+    <button class="fa fa-sign-out fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="logout()">
+      Logout</button>
+  </mat-menu>
+</mat-toolbar>
 <router-outlet></router-outlet>

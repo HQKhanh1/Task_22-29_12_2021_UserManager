@@ -18,4 +18,6 @@ public interface UsersService {
     Users createUser(Users users) throws UsernameExitException, MailException;
     Users updateUser(String userName, Users users) throws UsernameException;
     Users deleteUser(String name) throws UsernameException;
+    Boolean checkPassword(String password, String username) throws UsernameException;
+    Users changePassword(String password, String username) throws UsernameException;
 }

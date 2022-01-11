@@ -8,8 +8,10 @@ import com.example.taks_2229_2021_user.model.utils.PagingHeaders;
 import com.example.taks_2229_2021_user.model.utils.PagingResponse;
 import com.example.taks_2229_2021_user.payload.UserDto;
 import com.example.taks_2229_2021_user.payload.UserResponse;
+import com.example.taks_2229_2021_user.service.ClientService;
 import com.example.taks_2229_2021_user.service.UsersService;
 import com.example.taks_2229_2021_user.service.impl.UserSearch;
+import com.example.taks_2229_2021_user.service.sdi.ClientSdi;
 import com.example.taks_2229_2021_user.util.AppConstants;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -29,20 +32,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@PreAuthorize("isAuthenticated()")
 public class UserController {
     @Autowired
     private UsersService usersService;
     @Autowired
     private UserSearch userSearch;
+    @Autowired
+    private ClientService clientService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/login")
-    public String login() {
-        return "authenticated successfully";
+    public ResponseEntity<Boolean> login() {
+        return ResponseEntity.ok(true);
     }
 
     @PostMapping("/page")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(usersService.createUserMap(userDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/sendmail")
+    public ResponseEntity<Boolean> create(@RequestBody ClientSdi sdi) {
+        return ResponseEntity.ok(clientService.create(sdi));
     }
 
     @GetMapping("/page")
@@ -66,16 +78,27 @@ public class UserController {
         return new ResponseEntity<>(usersService.getUserByUserName(name), HttpStatus.OK);
     }
 
+    @GetMapping("/check/{username}/{password}")
+    public ResponseEntity<Boolean> checkPassword(
+            @PathVariable("username") String name,
+            @PathVariable("password") String password) throws UsernameException {
+        return  new ResponseEntity<Boolean>(usersService.checkPassword(password,name), HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<Users> createUser(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/{username}")
     public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException {
         return new ResponseEntity<>(usersService.updateUser(name, users), HttpStatus.OK);
     }
-
+    @PutMapping("/change/{username}")
+    public ResponseEntity<Users> changePassword(@PathVariable("username") String name, @RequestBody String password) throws UsernameException {
+        return new ResponseEntity<>(usersService.changePassword(password, name), HttpStatus.OK);
+    }
     @DeleteMapping("/{username}")
     public ResponseEntity<Users> deleteUser(@PathVariable("username") String name) throws UsernameException {
         return new ResponseEntity<>(usersService.deleteUser(name), HttpStatus.OK);

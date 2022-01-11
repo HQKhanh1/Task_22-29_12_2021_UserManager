@@ -15,10 +15,12 @@ import { LoginService } from './login.service';
 export class AuthGaurdServiceService implements CanActivate {
   constructor(private router: Router, private authService: LoginService) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (!this.authService.isUserLoggedIn()) {
+    if (this.authService.isUserLoggedIn() === false) {
       this.router.navigate(['login']);
       return false;
+    } else {
+      console.log('hellooooooo');
+      return true;
     }
-    return true;
   }
 }
