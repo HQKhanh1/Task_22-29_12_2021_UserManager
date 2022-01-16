@@ -12,9 +12,10 @@
 </head>
 <body style="background-color: beige">
 <p th:text="${'Hi, ' + firstname + ' ' + lastname + '!'}"></p>
-<p> You have just successfully registered an account on the system </p>
-<p> We send your system access information: </p>
-<p th:text="${'- Username: ' + username }"></p>
+<p> This is your new password: </p>
+<p th:text="${'- Password: ' + password }"></p>
+
+<p>Please change your password when logging into the system</p>
 <p>This is an automated email, please do not reply.</p>
 </body>
 </html>

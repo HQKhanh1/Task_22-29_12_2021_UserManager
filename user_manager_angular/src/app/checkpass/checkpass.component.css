@@ -75,16 +75,21 @@
   transition: all 0.1s linear;
 }
 
-.u-form-group label {
-  width: 100%;
+
+.u-form-group mat-error {
+  width: calc(79% - 50px);
+  height: 45px;
   outline: none;
-  color: #333;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  border-radius: 2px;
+  color: rgb(255, 1, 1);
   font-size: 1rem;
+  border-radius: 2px;
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
-
 
 .u-form-group button[type="submit"]{
   width: 20%;
@@ -93,7 +98,7 @@
   color: rgb(255, 255, 255);
   border-radius: 2px;
   text-transform: uppercase;
-
+  margin-top: 10px;
   margin-left: 75.5px;
 
 }
@@ -105,22 +110,8 @@
   color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
-
+  margin-top: 10px;
   margin-right: 75.5px;
 
 }
-.alert-danger {
-  text-align: center;
-  width: calc(79% - 50px);
-  height: 30px;
-  outline: none;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  color: #333;
-  font-size: 1rem;
-  -webkit-transition: all 0.1s linear;
-  -moz-transition: all 0.1s linear;
-  transition: all 0.1s linear;
-  margin: auto;
-  margin-bottom: 13px;
-}
+

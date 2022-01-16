@@ -5,25 +5,33 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-
-  username : string | null = sessionStorage.getItem('username');
-  constructor(
-    public loginService : LoginService,
-    private router: Router
-  ) { }
+  public username: string | null = sessionStorage.getItem('username');
+  constructor(public loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
+    this.username = sessionStorage.getItem('username');
+    console.log(
+      '\n\n\nusername trong navbar:',
+      sessionStorage.getItem('username'),
+      '\n\n\n'
+    );
   }
-  selectItem(){
-    this.router.navigate(['info/'+ this.username]);
+  selectItem() {
+    if (!this.username) {
+      this.username = sessionStorage.getItem('username');
+    }
+    this.router.navigate(['info/' + this.username]);
   }
-  changePass(){
-    this.router.navigate(['changepass/'+ this.username]);
+  changePass() {
+    if (!this.username) {
+      this.username = sessionStorage.getItem('username');
+    }
+    this.router.navigate(['checkpass/' + this.username]);
   }
-  logout(){
+  logout() {
     this.loginService.logOut();
     this.router.navigate(['login']);
   }

@@ -1,0 +1,34 @@
+<div class="changepass-box">
+  <div class="lb-header">
+    <a>Find your account</a>
+  </div>
+  <!-- formCCheckCurrentPass -->
+  <form class="changepass" [formGroup]="formCheckMail" (ngSubmit)="checkPass()">
+    <div class="u-form-group">
+      <a>Please enter your email to search your account.</a>
+    </div>
+    <div class="u-form-group">
+      <a style="color: green; background-color: azure;" *ngIf="checkSendMail">The system has generated a new password sent to your email. Please
+        check your email and login.</a>
+    </div>
+    <div class="u-form-group">
+      <input type="email" placeholder="Email:" value="{{this.formCheckMail.value.email}}" formControlName="email" />
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="formCheckMail.get('email')?.errors?.['required'] && submittedCheckPass">
+        Current password is required</mat-error>
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="checkSendMail === null && submittedCheckPass">
+        No users found with this email</mat-error>
+    </div>
+    <div class="u-form-group">
+      <button type="submit" [disabled]="!formCheckMail.valid" class="btn btn-success float-left">Enter</button>
+      <button type="button" (click)="goBack()" class="btn btn-warning float-right"
+        style="background-color: rgb(87, 87, 87);">
+        Back
+      </button>
+    </div>
+  </form>
+
+</div>

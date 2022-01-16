@@ -3,7 +3,7 @@ footer {
   width: 100%;
   height: auto;
   padding: 50px 100px;
-  background: #111;
+  background: rgb(30, 42, 94);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -41,7 +41,7 @@ footer .container .noi-dung.about h2:before {
 }
 
 footer .container .noi-dung.about p {
-  color: #999;
+  color: rgb(255, 255, 255);
 }
 
 .social-icon {
@@ -56,7 +56,8 @@ footer .container .noi-dung.about p {
   display: inline-block;
   width: 40px;
   height: 40px;
-  background: #222;
+  color: rgb(30, 42, 94);
+  background: rgb(0, 0, 0);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,7 +105,7 @@ footer .container .noi-dung.about p {
   list-style: none;
 }
 .links ul li a {
-  color: #999;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   margin-bottom: 10px;
   display: inline-block;
@@ -149,11 +150,11 @@ footer .container .noi-dung.about p {
 }
 
 .contact .info li span {
-  color: #999;
+  color: rgb(255, 255, 255);
 }
 
 .contact .info li a {
-  color: #999;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 

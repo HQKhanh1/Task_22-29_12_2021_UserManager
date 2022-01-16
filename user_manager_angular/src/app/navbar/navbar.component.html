@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <a class="fa fa-home fa-3x" mat-button routerLink="/home"></a>
+  <a class="fa fa-home fa-2x" mat-button routerLink="/home"> USER MANAGER </a>
   <div class="header">
   </div>
   <!-- <a mat-button routerLink="/home">Home</a> -->
@@ -12,8 +12,9 @@
       Home</button>
     <button class="fa fa-info-circle fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item
       (click)="selectItem()">
-      {{username}}</button>
-    <button class="fa fa-key fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="changePass()"> Change
+      Info</button>
+    <button class="fa fa-key fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="changePass()">
+      Change
       Password</button>
     <button class="fa fa-sign-out fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="logout()">
       Logout</button>

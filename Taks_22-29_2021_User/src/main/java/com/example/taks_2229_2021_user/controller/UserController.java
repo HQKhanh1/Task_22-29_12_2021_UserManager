@@ -11,8 +11,8 @@ import com.example.taks_2229_2021_user.payload.UserResponse;
 import com.example.taks_2229_2021_user.service.ClientService;
 import com.example.taks_2229_2021_user.service.UsersService;
 import com.example.taks_2229_2021_user.service.impl.UserSearch;
-import com.example.taks_2229_2021_user.service.sdi.ClientSdi;
 import com.example.taks_2229_2021_user.util.AppConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -41,7 +41,7 @@ public class UserController {
     @Autowired
     private ClientService clientService;
 
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/login")
     public ResponseEntity<Boolean> login() {
         return ResponseEntity.ok(true);
@@ -51,9 +51,16 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(usersService.createUserMap(userDto), HttpStatus.CREATED);
     }
-
+    @GetMapping("/checkemail/{email}")
+    public ResponseEntity<Users> findUsersByEmail(@PathVariable String email){
+        return new ResponseEntity<Users>(usersService.checkMailForgotPass(email), HttpStatus.OK);
+    }
+    @PostMapping("/changePassForgot")
+    public ResponseEntity<Boolean> changePassUserThenForgotPas(@RequestBody Users users){
+        return new ResponseEntity<>(usersService.changePassUserThenForgotPas(users), HttpStatus.OK);
+    }
     @PostMapping("/sendmail")
-    public ResponseEntity<Boolean> create(@RequestBody ClientSdi sdi) {
+    public ResponseEntity<Boolean> create(@RequestBody UserDto sdi) {
         return ResponseEntity.ok(clientService.create(sdi));
     }
 
@@ -85,19 +92,23 @@ public class UserController {
         return  new ResponseEntity<Boolean>(usersService.checkPassword(password,name), HttpStatus.OK);
     }
 
+    @PostMapping("signup")
+    public ResponseEntity<Users> signup(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
+        return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
+    }
     @PostMapping("")
     public ResponseEntity<Users> createUser(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
     }
-
     @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/{username}")
     public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException {
         return new ResponseEntity<>(usersService.updateUser(name, users), HttpStatus.OK);
     }
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/change/{username}")
-    public ResponseEntity<Users> changePassword(@PathVariable("username") String name, @RequestBody String password) throws UsernameException {
-        return new ResponseEntity<>(usersService.changePassword(password, name), HttpStatus.OK);
+    public ResponseEntity<Boolean> changePassword(@PathVariable("username") String name, @RequestBody UserDto userDto) throws UsernameException, JsonProcessingException {
+        return new ResponseEntity<>(usersService.changePassword(userDto.getPassword(), name), HttpStatus.OK);
     }
     @DeleteMapping("/{username}")
     public ResponseEntity<Users> deleteUser(@PathVariable("username") String name) throws UsernameException {

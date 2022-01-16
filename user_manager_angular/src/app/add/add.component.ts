@@ -12,7 +12,7 @@ import { User } from '../model/user';
 export class AddComponent implements OnInit {
   submitted: boolean = false;
   checkSignUp: boolean = false;
-  user: User = new User();
+  user: User = new User('');
   error: any = '';
   selectRole: string = '';
   optionsRole = [

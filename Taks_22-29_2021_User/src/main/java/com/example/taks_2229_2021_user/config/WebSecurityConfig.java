@@ -22,12 +22,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/**").fullyAuthenticated()
-                .antMatchers(HttpMethod.OPTIONS, "/user/**").hasAnyRole("ADMIN")
-                .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated()
-                .and().headers().frameOptions().sameOrigin().and()
-                .httpBasic().and().formLogin();
+                .antMatchers(HttpMethod.POST, "/user/signup").permitAll()
+                .antMatchers("/", "/h2/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/sendmail").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/changePassForgot").permitAll()
+                .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
+                .antMatchers(HttpMethod.PUT,"/user/change/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/user/**").hasAnyRole("ROLE_ADMIN")
+                .anyRequest().authenticated().and().httpBasic();
         ;
     }
 
@@ -40,17 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl r = new RoleHierarchyImpl();
         r.setHierarchy("ROLE_ADMIN >  ROLE_USER");
-//        r.setHierarchy("ROLE_USER >  ROLE_ADMIN");
         return r;
     }
-//
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 }

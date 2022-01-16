@@ -14,7 +14,6 @@ import { DetailUserComponent } from './detail-user/detail-user.component';
 import { EditComponent } from './edit/edit.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { UserHomeComponent } from './user/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -23,7 +22,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { InfoComponent } from './info/info.component';
-import { ChangpassComponent } from './changpass/changpass.component';
+import { CheckpassComponent } from './checkpass/checkpass.component';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 
 // import { MDBBootstrapModule } from 'angularbootstrap-md';
 @NgModule({
@@ -39,9 +39,9 @@ import { ChangpassComponent } from './changpass/changpass.component';
     PageNotFoundComponent,
     SignupComponent,
     LogoutComponent,
-    UserHomeComponent,
     InfoComponent,
-    ChangpassComponent,
+    CheckpassComponent,
+    ForgotpassComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,58 @@
+<div class="changepass-box">
+  <div class="lb-header">
+    <a *ngIf="!checkCurrent">Check Password</a>
+    <a *ngIf="checkCurrent === true">Change Password</a>
+  </div>
+  <!-- formCCheckCurrentPass -->
+  <form *ngIf="!checkCurrent" class="changepass" [formGroup]="formCurrentPass" (ngSubmit)="checkPass()">
+    <div class="u-form-group">
+      <input type="password" placeholder="Current password:" value="{{this.formCurrentPass.value.curentPass}}"
+        formControlName="currentPass" />
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger"
+        *ngIf="formCurrentPass.get('currentPass')?.errors?.['required'] && submittedCurrentPass">
+        Current password is required</mat-error>
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="checkCurrent ===false && submittedCurrentPass">
+        Password is not correct</mat-error>
+    </div>
+    <div class="u-form-group">
+      <button type="submit" [disabled]="!formCurrentPass.valid" class="btn btn-success float-left">Enter</button>
+      <button type="button" (click)="goBack()" class="btn btn-warning float-right"
+        style="background-color: rgb(87, 87, 87);">
+        Back
+      </button>
+    </div>
+  </form>
+  <!-- formchangePass -->
+  <form *ngIf="checkCurrent === true" class="changepass" [formGroup]="formChangePass" (ngSubmit)="changePassword()">
+    <div class="u-form-group">
+      <input type="password" placeholder="New password:" formControlName="changePass" />
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="formChangePass.get('changePass')?.errors?.['required'] && submittedChangePass">
+        New password is required</mat-error>
+    </div>
+    <div class="u-form-group">
+      <input type="password" placeholder="Confirm new password:" formControlName="changePassConf" />
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="formChangePass.get('changePassConf')?.errors?.['required'] && submittedChangePass">
+        New password confirm is required</mat-error>
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="!checkMatchNewPass() && submittedChangePass">
+        Password and confirm password do not match</mat-error>
+    </div>
+    <div class="u-form-group">
+      <button type="submit" class="btn btn-success float-left">Enter</button>
+      <button type="button" (click)="goBackChange()" class="btn btn-warning float-right"
+        style="background-color: rgb(87, 87, 87);">
+        Back
+      </button>
+    </div>
+  </form>
+
+</div>

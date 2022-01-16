@@ -19,7 +19,7 @@ export class InfoComponent implements OnInit {
     role: new FormControl(''),
   });
   public username!: string;
-  public user: User = new User();
+  public user: User = new User('');
   public submitted: boolean = false;
   error: any = '';
   constructor(

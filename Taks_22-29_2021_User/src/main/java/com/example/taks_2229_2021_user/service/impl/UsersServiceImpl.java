@@ -7,7 +7,11 @@ import com.example.taks_2229_2021_user.model.Users;
 import com.example.taks_2229_2021_user.payload.UserDto;
 import com.example.taks_2229_2021_user.payload.UserResponse;
 import com.example.taks_2229_2021_user.repository.UsersRepository;
+import com.example.taks_2229_2021_user.service.ClientService;
 import com.example.taks_2229_2021_user.service.UsersService;
+import com.example.taks_2229_2021_user.util.DataUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +29,9 @@ import java.util.stream.Collectors;
 public class UsersServiceImpl implements UsersService {
     @Autowired
     private UsersRepository usersRepository;
-
+    @Autowired
+    private ClientService clientService;
+    private DataUtils dataUtils;
     private UserDto mapToDTO(Users users) {
         UserDto userDto = new UserDto();
         userDto.setUsername(users.getUsername());
@@ -70,15 +76,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users changePassword(String password, String username) throws UsernameException {
+    public Boolean changePassword(String password, String username) throws UsernameException, JsonProcessingException {
         Users usersChange = usersRepository.findById(username).orElse(null);
         if (usersChange == null) {
             throw new UsernameException("User not found");
         } else {
             usersChange.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
             usersRepository.save(usersChange);
-            return usersChange;
         }
+        ObjectMapper om = new ObjectMapper();
+        Object value;
+        String json = om.writeValueAsString(usersChange);
+
+        return true;
     }
 
     @Override
@@ -125,8 +135,17 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users createUser(Users users) throws UsernameExitException, MailException {
         checkEmailOrUsername(users);
+        users.setPassword(BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12)));
         usersRepository.save(users);
         return users;
+    }
+    @Override
+    public Boolean changePassUserThenForgotPas(Users users) {
+        users.setPassword(DataUtils.generateTempPwd(8));
+        clientService.forgotPassword(users, users.getPassword());
+        users.setPassword(BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12)));
+        usersRepository.save(users);
+        return true;    
     }
 
     @Override
@@ -156,7 +175,15 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> getAllVaccineDTONotPagination() {
         return usersRepository.findAll();
     }
-
+    @Override
+    public Users checkMailForgotPass(String email){
+        for(Users users : new ArrayList<>(usersRepository.findAll())){
+            if(email.equals(users.getEmail())){
+                return users;
+            }
+        }
+        return null;
+    }
     private void checkEmailOrUsername(Users users) throws MailException, UsernameExitException {
         for (Users userCheck : new ArrayList<>(usersRepository.findAll())) {
             if (users.getEmail().equals(userCheck.getEmail())) {

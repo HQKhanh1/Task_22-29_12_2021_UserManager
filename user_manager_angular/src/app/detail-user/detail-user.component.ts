@@ -10,7 +10,7 @@ import { User } from '../model/user';
 })
 export class DetailUserComponent implements OnInit {
   public username!: string;
-  public user: User = new User();
+  public user: User = new User('');
   constructor(
     private router: ActivatedRoute,
     private httpService: HttpServiceService
@@ -20,8 +20,8 @@ export class DetailUserComponent implements OnInit {
     this.username = this.router.snapshot.params['username'];
     this.httpService.getUserByUsername(this.username).subscribe((data) => {
       this.user = data;
+      console.log('DData: ', this.user);
     });
-    console.log("DData: ", this.user);
   }
 
   public goBack() {

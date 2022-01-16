@@ -12,7 +12,8 @@ import { SignupComponent } from './signup/signup.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGaurdServiceService } from '../service/auth-gaurd-service.service';
 import { InfoComponent } from './info/info.component';
-import { ChangpassComponent } from './changpass/changpass.component';
+import { CheckpassComponent } from './checkpass/checkpass.component';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -24,12 +25,16 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGaurdServiceService],
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: 'signup',
     component: SignupComponent,
   },
   { path: 'edit', component: EditComponent },
+  { path: 'forgotpass', component: ForgotpassComponent },
   {
     path: 'add',
     component: AddComponent,
@@ -46,8 +51,8 @@ const routes: Routes = [
     canActivate: [AuthGaurdServiceService],
   },
   {
-    path: 'changepass/:username',
-    component: ChangpassComponent,
+    path: 'checkpass/:username',
+    component: CheckpassComponent,
     canActivate: [AuthGaurdServiceService],
   },
   {
@@ -55,7 +60,11 @@ const routes: Routes = [
     component: LogoutComponent,
     canActivate: [AuthGaurdServiceService],
   },
-  { path: '', component: LoginComponent },
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGaurdServiceService],
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

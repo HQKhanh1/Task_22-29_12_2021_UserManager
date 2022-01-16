@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { UtilsService } from '../../service/utils.service';
 import { HttpServiceService } from '../../service/http-service.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-login',
@@ -45,20 +46,16 @@ export class LoginComponent implements OnInit {
           this.formLogin.value.password
         )
         .subscribe((data: any) => {
-          if (data === 'true') {
+          console.log("Data login", data);
+          if (data) {
             let authString =
               'Basic ' + btoa(this.username + ':' + this.password);
-            // sessionStorage.removeItem('username');
             sessionStorage.setItem('username', this.username);
-            // sessionStorage.removeItem('basicauth');
             sessionStorage.setItem('basicauth', authString);
-            this.http.getUserByUsername(this.username).subscribe((data) => {
-              // sessionStorage.removeItem('rolename');
-              if (data.roleName && data.roleName == 'ROLE_ADMIN') {
-                console.log('do admin roif ne', data.roleName);
+            console.log('token trong login',  sessionStorage.getItem('basicauth'));
+            this.http.getUserByUsername(this.username).subscribe((data : User) => {
+                console.log('do admin roif ne', data);
                 this.router.navigate(['home']);
-              } else {
-              }
             });
             this.inValidLogin = true;
           } else {

@@ -1,11 +1,11 @@
 package com.example.taks_2229_2021_user.service.impl;
 
+import com.example.taks_2229_2021_user.model.Users;
 import com.example.taks_2229_2021_user.payload.DataMailDTO;
+import com.example.taks_2229_2021_user.payload.UserDto;
 import com.example.taks_2229_2021_user.service.ClientService;
 import com.example.taks_2229_2021_user.service.MailService;
-import com.example.taks_2229_2021_user.service.sdi.ClientSdi;
 import com.example.taks_2229_2021_user.util.Const;
-import com.example.taks_2229_2021_user.util.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class ClientServiceImpl implements ClientService {
     private MailService mailService;
 
     @Override
-    public Boolean create(ClientSdi sdi) {
+    public Boolean create(UserDto sdi) {
         try {
             DataMailDTO dataMail = new DataMailDTO();
 
@@ -30,7 +30,6 @@ public class ClientServiceImpl implements ClientService {
             props.put("firstname", sdi.getFirstname());
             props.put("lastname", sdi.getLastname());
             props.put("username", sdi.getUsername());
-            props.put("password", DataUtils.generateTempPwd(6));
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
@@ -39,5 +38,24 @@ public class ClientServiceImpl implements ClientService {
             exp.printStackTrace();
         }
         return false;
+    }
+    @Override
+    public void forgotPassword(Users sdi, String password) {
+        try {
+            DataMailDTO dataMail = new DataMailDTO();
+
+            dataMail.setTo(sdi.getEmail());
+            dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_FORGET_PASSWORD);
+
+            Map<String, Object> props = new HashMap<>();
+            props.put("firstname", sdi.getFirstname());
+            props.put("lastname", sdi.getLastname());
+            props.put("password", password);
+            dataMail.setProps(props);
+
+            mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_FORGET_PASSWORD);
+        } catch (MessagingException exp) {
+            exp.printStackTrace();
+        }
     }
 }

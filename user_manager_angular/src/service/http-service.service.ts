@@ -1,24 +1,21 @@
 import { User } from './../app/model/user';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError, catchError } from 'rxjs';
+import { Observable, throwError, catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpServiceService {
   private REST_API_SERVER = 'http://localhost:8080/user';
-  headers: any = sessionStorage.getItem('basicauth');
+  private headers: any | null = sessionStorage.getItem('basicauth');
   private httpOptions = {
     headers: new HttpHeaders({
       Authorization: this.headers,
     }).set('Content-Type', 'application/json'),
+  };
+  private nowHttpOption = {
+    headers: new HttpHeaders().set('Content-Type', 'application/json'),
   };
   constructor(private httpClient: HttpClient) {}
   public getAllUser(index: number): Observable<any> {
@@ -49,7 +46,8 @@ export class HttpServiceService {
         '&lastname=' +
         lastname +
         '&email=' +
-        email
+        email,
+      this.httpOptions
     );
   }
   public getCustomHeaders(): HttpHeaders {
@@ -58,12 +56,30 @@ export class HttpServiceService {
     return headers;
   }
   public getUserByUsername(username: string): Observable<any> {
+    if (!this.headers) {
+      this.headers = sessionStorage.getItem('basicauth');
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          Authorization: this.headers,
+        }).set('Content-Type', 'application/json'),
+      };
+      console.log('lay trong http service: ', this.headers);
+    }
+
     return this.httpClient.get<any>(
       this.REST_API_SERVER + '/' + username,
       this.httpOptions
     );
   }
-  public update(user: User): Observable<HttpResponse<any>> {
+  public updatePassword(username: string, password: User): Observable<any> {
+    console.log('API USER: ', JSON.stringify(password));
+    return this.httpClient.put<any>(
+      this.REST_API_SERVER + '/change/' + username,
+      password,
+      this.httpOptions
+    );
+  }
+  public update(user: User): Observable<any> {
     console.log('API USER: ', JSON.stringify(user));
     return this.httpClient.put<any>(
       this.REST_API_SERVER + '/' + user.username,
@@ -78,13 +94,31 @@ export class HttpServiceService {
       this.httpOptions
     );
   }
-  public signUpUser(user: User): Observable<HttpResponse<any>> {
+  public signUpUser(user: User): Observable<any> {
     console.log('API USER: ', JSON.stringify(user));
+    console.log('Heloo dang ki chua xong dau ne: ');
+
     return this.httpClient.post<any>(
-      this.REST_API_SERVER,
+      this.REST_API_SERVER + '/signup',
       JSON.stringify(user),
-      this.httpOptions
+      this.nowHttpOption
     );
+  }
+  public sendMail(user: User): Observable<any> {
+    console.log('API USER: ', JSON.stringify(user));
+    console.log('Heloo dang ki chua xong dau ne: ');
+    return this.httpClient
+      .post<any>(
+        this.REST_API_SERVER + '/sendmail',
+        JSON.stringify(user),
+        this.nowHttpOption
+      )
+      .pipe(
+        map((userData) => {
+          console.log('userData: ', userData);
+          return userData;
+        })
+      );
   }
 
   // private handleError(error: HttpErrorResponse) {

@@ -1,7 +1,5 @@
+
 <div class="container">
-  <div>
-    <h2 style="text-align: center">USER MANAGER</h2>
-  </div>
   <div class="container-fluid">
     <form [formGroup]="searchUser" (ngSubmit)="search()">
       <div class=" search row d-flex justify-content-md-end mb-4 text-right float-right">
@@ -43,10 +41,11 @@
     </form>
   </div>
 
-  <div style="margin-bottom: 10px;">
-    <button class="btn btn-success" routerLink="/add"><i class="fa fa-plus"></i>Add User</button>
-  </div>
+
   <div class="container tab">
+    <div style="margin-bottom: 5px;">
+      <button class="btn btn-success" routerLink="/add"><i class="fa fa-plus"></i>Add User</button>
+    </div>
     <table class="table table-hover table-bordered">
       <thead>
         <tr class="bg-table-header">

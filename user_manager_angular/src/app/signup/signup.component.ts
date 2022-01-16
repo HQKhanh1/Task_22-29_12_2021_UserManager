@@ -18,7 +18,7 @@ import { HttpServiceService } from 'src/service/http-service.service';
 })
 export class SignupComponent implements OnInit {
   submitted: boolean = false;
-  user: User = new User();
+  user: User = new User('');
   error: any = '';
   public formSignUp: FormGroup = new FormGroup({});
   constructor(
@@ -50,17 +50,21 @@ export class SignupComponent implements OnInit {
       this.user.email = this.formSignUp.value.email.toLowerCase();
       this.user.password = this.formSignUp.value.pass;
       this.user.roleName = 'ROLE_USER';
-      console.log('User: ');
+      console.log('User: ', this.user);
       this.signUpService.signUpUser(this.user).subscribe((data: any) => {
-        console.log('Status code: ', data.statusCode);
-        this.error = this.messageError.messageError(data.statusCode);
-      });
-
-      if (this.error === '') {
-        if (confirm('Successful registration, please login!')) {
-          this.router.navigate(['login']);
+        console.log('null statuscoe');
+        if (data.statusCode) {
+          this.error = this.messageError.messageError(data.statusCode);
+        } else {
+          this.signUpService.sendMail(this.user).subscribe((data: any) => {
+            console.log('data mail: ', data);
+          });
+          if (confirm('Successful registration, please login!')) {
+            this.router.navigate(['login']);
+          }
+          console.log('null statuscoe');
         }
-      }
+      });
     }
   }
   checkPasswords(): boolean {

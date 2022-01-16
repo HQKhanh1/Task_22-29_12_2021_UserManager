@@ -2,7 +2,7 @@
 
 -- noinspection SqlDialectInspectionForFile
 INSERT INTO demouser (username, pw, fsname, lsname, email, role_name)
-VALUES ('admin', '$2a$12$/cz0pefCMQScDVaokoYtJOAb6xPARUT2O6ZH5nEXXKzb3dLfnowQm', 'Khánh', 'Huynh', 'khanh@gmai.com',
+VALUES ('admin', '$2a$12$/cz0pefCMQScDVaokoYtJOAb6xPARUT2O6ZH5nEXXKzb3dLfnowQm', 'Khánh', 'Huynh', 'khanhmeocon98@gmail.com',
         'ROLE_ADMIN'),
        ('1', '$2a$12$/cz0pefCMQScDVaokoYtJOAb6xPARUT2O6ZH5nEXXKzb3dLfnowQm', '1', 'Huynh', '1@gmai.com', 'ROLE_USER'),
        ('2', '$2a$12$/cz0pefCMQScDVaokoYtJOAb6xPARUT2O6ZH5nEXXKzb3dLfnowQm', '2', 'Huynh', '2@gmai.com', 'ROLE_USER'),
