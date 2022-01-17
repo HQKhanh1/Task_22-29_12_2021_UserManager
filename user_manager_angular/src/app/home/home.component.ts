@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     private routerA: ActivatedRoute
   ) {}
   public ngOnInit() {
+
     if (this.routerA.snapshot.params['id']) {
       console.log('ID: ', this.routerA.snapshot.params['id']);
       this.indexPagination = this.routerA.snapshot.params['id'];

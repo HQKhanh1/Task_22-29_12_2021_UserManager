@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 import { User } from '../app/model/user';
 export class UserLogin {
   constructor(public status: string) {}
@@ -26,10 +30,10 @@ export class LoginService {
         responseType: 'json',
       })
       .pipe(
-        map((userData) => {
-          console.log('userData: ', userData);
-          return userData;
-        })
+        tap(
+          // Log the result or error
+          (error) => console.log('data login ne:', error)
+        )
       );
   }
   public findUsersByEmail(email: string) {
@@ -45,7 +49,8 @@ export class LoginService {
     console.log('Json USER: ', JSON.stringify(user));
     return this.httpClient.post<any>(
       'http://localhost:8080/user/changePassForgot',
-      JSON.stringify(user), this.nowHttpOption
+      JSON.stringify(user),
+      this.nowHttpOption
     );
   }
   public isUserLoggedIn(): boolean {

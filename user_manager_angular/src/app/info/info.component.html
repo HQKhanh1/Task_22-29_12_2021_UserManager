@@ -12,19 +12,19 @@
       <input type="text-name" placeholder="Lastname" value="{{user.lastname}}" formControlName="lastname" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formUpdate.get('firstname')?.errors && submitted">
-        Firstname is required</div>
-      <div class="error" *ngIf="formUpdate.get('lastname')?.errors && submitted">
-        Lastname is required</div>
+      <mat-error class="alert-danger" *ngIf="formUpdate.get('firstname')?.errors && submitted">
+        Firstname is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formUpdate.get('lastname')?.errors && submitted">
+        Lastname is required</mat-error>
     </div>
     <div class="u-form-group">
       <input type="email" placeholder="Email" email formControlName="email" value="{{formUpdate.value.email}}" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formUpdate.get('email')?.errors?.['required'] && submitted">
-        Email is required</div>
-      <div class="error" *ngIf="formUpdate.get('email')?.errors?.['email'] && submitted">
-        Email is invalidate</div>
+      <mat-error class="alert-danger" *ngIf="formUpdate.get('email')?.errors?.['required'] && submitted">
+        Email is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formUpdate.get('email')?.errors?.['email'] && submitted">
+        Email is invalidate</mat-error>
     </div>
 
     <div class="u-form-group">

@@ -41,7 +41,6 @@ public class UserController {
     @Autowired
     private ClientService clientService;
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/login")
     public ResponseEntity<Boolean> login() {
         return ResponseEntity.ok(true);
@@ -80,7 +79,7 @@ public class UserController {
         return new ResponseEntity<>(usersService.getAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/finduser/{username}")
     public ResponseEntity<Users> getUserByUsername(@PathVariable("username") String name) throws UsernameException {
         return new ResponseEntity<>(usersService.getUserByUserName(name), HttpStatus.OK);
     }

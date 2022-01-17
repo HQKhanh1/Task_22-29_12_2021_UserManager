@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
-import { UtilsService } from '../../service/utils.service';
 import { HttpServiceService } from '../../service/http-service.service';
 import { User } from '../model/user';
 
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private http: HttpServiceService
   ) {}
-  inValidLogin: boolean = false;
+  inValidLogin: any = '';
   username: string = '';
   password: string = '';
   ngOnInit(): void {
@@ -40,28 +39,40 @@ export class LoginComponent implements OnInit {
       console.log('username: ', this.username);
       console.log('password: ', this.password);
 
-      let loginnn = this.loginService
+      this.loginService
         .authenticate(
           this.formLogin.value.username,
           this.formLogin.value.password
         )
-        .subscribe((data: any) => {
-          console.log("Data login", data);
-          if (data) {
-            let authString =
-              'Basic ' + btoa(this.username + ':' + this.password);
-            sessionStorage.setItem('username', this.username);
-            sessionStorage.setItem('basicauth', authString);
-            console.log('token trong login',  sessionStorage.getItem('basicauth'));
-            this.http.getUserByUsername(this.username).subscribe((data : User) => {
-                console.log('do admin roif ne', data);
-                this.router.navigate(['home']);
-            });
-            this.inValidLogin = true;
-          } else {
+        .subscribe(
+          (data) => {
+            console.log('Data login', data);
+            if (data) {
+              let authString =
+                'Basic ' + btoa(this.username + ':' + this.password);
+              sessionStorage.setItem('username', this.username);
+              sessionStorage.setItem('basicauth', authString);
+              console.log(
+                'token trong login',
+                sessionStorage.getItem('basicauth')
+              );
+              this.http
+                .getUserByUsername(this.username)
+                .subscribe((data: User) => {
+                  console.log('ROLE NAME: ', data.roleName);
+                  if (data.roleName === 'ROLE_ADMIN') {
+                    this.router.navigate(['home']);
+                  } else {
+                    this.router.navigate(['viewuser']);
+                  }
+                });
+              this.inValidLogin = true;
+            }
+          },
+          (error) => {
             this.inValidLogin = false;
           }
-        });
+        );
     }
   }
 }

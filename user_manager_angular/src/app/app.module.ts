@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AddComponent } from './add/add.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
-import { EditComponent } from './edit/edit.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -24,6 +23,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { InfoComponent } from './info/info.component';
 import { CheckpassComponent } from './checkpass/checkpass.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+import { ViewUserComponent } from './user/view-user/view-user.component';
 
 // import { MDBBootstrapModule } from 'angularbootstrap-md';
 @NgModule({
@@ -31,7 +31,6 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
     AppComponent,
     AddComponent,
     DetailUserComponent,
-    EditComponent,
     FooterComponent,
     HomeComponent,
     LoginComponent,
@@ -42,6 +41,7 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
     InfoComponent,
     CheckpassComponent,
     ForgotpassComponent,
+    ViewUserComponent,
   ],
   imports: [
     BrowserModule,

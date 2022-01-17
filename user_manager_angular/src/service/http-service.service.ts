@@ -8,7 +8,7 @@ import { Observable, throwError, catchError, map } from 'rxjs';
 })
 export class HttpServiceService {
   private REST_API_SERVER = 'http://localhost:8080/user';
-  private headers: any | null = sessionStorage.getItem('basicauth');
+  public headers: any | null = sessionStorage.getItem('basicauth');
   private httpOptions = {
     headers: new HttpHeaders({
       Authorization: this.headers,
@@ -19,6 +19,13 @@ export class HttpServiceService {
   };
   constructor(private httpClient: HttpClient) {}
   public getAllUser(index: number): Observable<any> {
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
+    console.log('header trong lay page: ', this.headers);
     return this.httpClient.get<any>(
       this.REST_API_SERVER + '/page?pageSize=5&pageNo=' + index,
       this.httpOptions
@@ -26,6 +33,12 @@ export class HttpServiceService {
   }
 
   public getAllUserNotPagination(): Observable<any> {
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
     return this.httpClient.get<any>(
       this.REST_API_SERVER + '/user-not-pagination',
       this.httpOptions
@@ -37,6 +50,12 @@ export class HttpServiceService {
     lastname: string,
     email: string
   ): Observable<any> {
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
     return this.httpClient.get<any>(
       this.REST_API_SERVER +
         '/mapsearch?username=' +
@@ -50,11 +69,6 @@ export class HttpServiceService {
       this.httpOptions
     );
   }
-  public getCustomHeaders(): HttpHeaders {
-    const headers = new HttpHeaders();
-
-    return headers;
-  }
   public getUserByUsername(username: string): Observable<any> {
     if (!this.headers) {
       this.headers = sessionStorage.getItem('basicauth');
@@ -64,15 +78,27 @@ export class HttpServiceService {
         }).set('Content-Type', 'application/json'),
       };
       console.log('lay trong http service: ', this.headers);
+    } else {
+      this.headers = sessionStorage.getItem('basicauth');
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          Authorization: this.headers,
+        }).set('Content-Type', 'application/json'),
+      };
     }
-
     return this.httpClient.get<any>(
-      this.REST_API_SERVER + '/' + username,
+      this.REST_API_SERVER + '/finduser/' + username,
       this.httpOptions
     );
   }
   public updatePassword(username: string, password: User): Observable<any> {
     console.log('API USER: ', JSON.stringify(password));
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
     return this.httpClient.put<any>(
       this.REST_API_SERVER + '/change/' + username,
       password,
@@ -81,6 +107,12 @@ export class HttpServiceService {
   }
   public update(user: User): Observable<any> {
     console.log('API USER: ', JSON.stringify(user));
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
     return this.httpClient.put<any>(
       this.REST_API_SERVER + '/' + user.username,
       JSON.stringify(user),
@@ -89,6 +121,12 @@ export class HttpServiceService {
   }
   public delete(user: User): Observable<any> {
     console.log('url: ', this.REST_API_SERVER + '/' + user.username);
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
     return this.httpClient.delete<any>(
       this.REST_API_SERVER + '/' + user.username,
       this.httpOptions
@@ -120,20 +158,4 @@ export class HttpServiceService {
         })
       );
   }
-
-  // private handleError(error: HttpErrorResponse) {
-  //   if (error.status === 400) {
-  //     // A client-side or network error occurred. Handle it accordingly.
-  //     console.error('An error occurred:', error.error);
-  //   } else {
-  //     // The backend returned an unsuccessful response code.
-  //     // The response body may contain clues as to what went wrong.
-  //     console.error(
-  //       `Backend returned code ${error.status}, body was: `,
-  //       error.error
-  //     );
-  //   }
-  //   // Return an observable with a user-facing error message.
-  //   return new Error('Something bad happened; please try again later.');
-  // }
 }

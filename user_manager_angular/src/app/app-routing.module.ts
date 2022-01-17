@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AddComponent } from './add/add.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
-import { EditComponent } from './edit/edit.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -14,6 +13,7 @@ import { AuthGaurdServiceService } from '../service/auth-gaurd-service.service';
 import { InfoComponent } from './info/info.component';
 import { CheckpassComponent } from './checkpass/checkpass.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+import { ViewUserComponent } from './user/view-user/view-user.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -32,9 +32,7 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
-  },
-  { path: 'edit', component: EditComponent },
-  { path: 'forgotpass', component: ForgotpassComponent },
+  },{ path: 'forgotpass', component: ForgotpassComponent },
   {
     path: 'add',
     component: AddComponent,
@@ -59,6 +57,10 @@ const routes: Routes = [
     path: 'logout',
     component: LogoutComponent,
     canActivate: [AuthGaurdServiceService],
+  },
+  {
+    path: 'viewuser',
+    component: ViewUserComponent,
   },
   {
     path: '',

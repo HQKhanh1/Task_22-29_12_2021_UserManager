@@ -23,14 +23,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user/signup").permitAll()
-                .antMatchers("/", "/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/sendmail").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/changePassForgot").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
                 .antMatchers(HttpMethod.PUT,"/user/change/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/user/**").hasAnyRole("ROLE_ADMIN")
-                .anyRequest().authenticated().and().httpBasic();
+                .antMatchers("/", "/user/login").hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.GET, "/user/finduser/**").hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.GET, "/user/check/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/", "/user/**").hasAnyRole("ADMIN")
+                .anyRequest().authenticated().and()
+                .formLogin().permitAll().and().logout()
+                .and().httpBasic();
         ;
     }
 

@@ -7,10 +7,11 @@
   margin-right: auto;
 
   width: 500px;
-  height: 530px;
+  height: auto;
   min-width: 380px;
   background-color: rgb(255, 255, 255);
   padding: 10px;
+  padding-bottom: 50px;
   border-radius: 10px;
   -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
   -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
@@ -48,7 +49,6 @@
 
 .signup {
   position: relative;
-  float: left;
   width: 100%;
   height: auto;
   margin-top: 20px;
@@ -104,10 +104,9 @@
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
-
 }
 
-.u-form-group button[type="submit"]{
+.u-form-group button[type="submit"] {
   width: 20%;
   background-color: #295aea;
   border: none;
@@ -116,10 +115,9 @@
   border-radius: 5px;
   text-transform: uppercase;
   margin-left: 75.5px;
-
 }
 
-.u-form-group button[type="button"]{
+.u-form-group button[type="button"] {
   width: 20%;
   background-color: #295aea;
   border: none;
@@ -128,10 +126,18 @@
   border-radius: 5px;
   text-transform: uppercase;
   margin-right: 75.5px;
-
 }
-.u-form-group .error {
-  color: red;
-  text-align: center;
-  margin: auto;
+.u-form-group mat-error {
+  width: calc(79% - 50px);
+  height: 45px;
+  outline: none;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  border-radius: 2px;
+  color: rgb(255, 1, 1);
+  font-size: 1rem;
+  border-radius: 2px;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
 }

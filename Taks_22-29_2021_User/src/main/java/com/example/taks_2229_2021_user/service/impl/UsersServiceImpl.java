@@ -145,7 +145,7 @@ public class UsersServiceImpl implements UsersService {
         clientService.forgotPassword(users, users.getPassword());
         users.setPassword(BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12)));
         usersRepository.save(users);
-        return true;    
+        return true;
     }
 
     @Override

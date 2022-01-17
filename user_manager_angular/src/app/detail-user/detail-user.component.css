@@ -2,9 +2,10 @@
   position: relative;
   margin: 40px auto;
   width: 500px;
-  height: 560px;
+  height: auto;
   background-color: #fff;
   padding: 12px;
+  padding-bottom: 50px;
   border-radius: 10px;
   box-shadow: 3px 2px 20px 5px rgba(68, 155, 255, 0.33);
 }
@@ -33,7 +34,6 @@
 
 .user-detail {
   position: relative;
-  float: left;
   width: 100%;
   height: auto;
   margin-top: 20px;
