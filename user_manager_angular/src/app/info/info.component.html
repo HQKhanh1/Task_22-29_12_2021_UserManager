@@ -4,12 +4,18 @@
   </div>
   <div class="signup">
     <div class="u-form-group">
+      <mat-label style="margin-right: 250px;">User name </mat-label>
       <input type="text" placeholder="Username" readonly value="{{formUpdate.value.username}}"/>
     </div>
     <div class="u-form-group">
+      <mat-label style="margin-right: 80px ;">
+        <a>First name</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a>Last name</a>
+      </mat-label>
       <input type="text-name" placeholder="Firstname" value="{{formUpdate.value.firstname}}" formControlName="firstname" />
       &nbsp;
-      <input type="text-name" placeholder="Lastname" value="{{user.lastname}}" formControlName="lastname" />
+      <input type="text-name" placeholder="Lastname" value="{{formUpdate.value.lastname}}" formControlName="lastname" />
     </div>
     <div class="u-form-group">
       <mat-error class="alert-danger" *ngIf="formUpdate.get('firstname')?.errors && submitted">
@@ -18,6 +24,7 @@
         Lastname is required</mat-error>
     </div>
     <div class="u-form-group">
+      <mat-label style="margin-right: 290px;">Email</mat-label>
       <input type="email" placeholder="Email" email formControlName="email" value="{{formUpdate.value.email}}" />
     </div>
     <div class="u-form-group">
@@ -28,7 +35,8 @@
     </div>
 
     <div class="u-form-group">
-      <input type="text" placeholder="role" formControlName="role" readonly value="{{formUpdate.value.role}}" />
+      <mat-label style="margin-right: 295px;">Role</mat-label>
+      <input type="text" placeholder="role" formControlName="role" readonly value="{{showRole(formUpdate.value.role)}}" />
     </div>
     <div class="u-form-group">
       <button type="submit"  class="btn btn-success float-left">Update</button>

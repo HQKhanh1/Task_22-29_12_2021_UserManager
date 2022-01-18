@@ -50,19 +50,23 @@
       <thead>
         <tr class="bg-table-header">
           <th scope="col">Username</th>
-          <th scope="col">Full name</th>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
           <th scope="col">Email</th>
+          <th scope="col">Role</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody style="font-size: 16px;text-align: center">
         <tr *ngFor="let data of user">
-          <td style="text-align: left">{{data.username}}</td>
-          <td style="text-align: left">{{data.firstname}} {{ data.lastname }}</td>
-          <td style="text-align: left">{{data.email}}</td>
+          <td style="text-align: center">{{data.username}}</td>
+          <td style="text-align: center">{{data.firstname}}</td>
+          <td style="text-align: center">{{data.lastname }}</td>
+          <td style="text-align: center">{{data.email}}</td>
+          <td style="text-align: center">{{showRole(data.roleName)}}</td>
           <td class="text-center">
-            <button class='btn btn-primary' (click)="detail(data.username)">Detail</button> &nbsp;
-            <button class='btn btn-danger' (click)="delete(data)">Delete</button>
+            <button class='btn btn-primary' (click)="detail(data.username)"><i class="fa fa-wrench"></i></button> &nbsp;
+            <button class='btn btn-danger' (click)="delete(data)"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>

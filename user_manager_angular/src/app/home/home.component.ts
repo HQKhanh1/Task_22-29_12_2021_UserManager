@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
     private routerA: ActivatedRoute
   ) {}
   public ngOnInit() {
-
     if (this.routerA.snapshot.params['id']) {
       console.log('ID: ', this.routerA.snapshot.params['id']);
       this.indexPagination = this.routerA.snapshot.params['id'];
@@ -189,6 +188,13 @@ export class HomeComponent implements OnInit {
         window.location.reload();
         this.router.navigate(['home', this.indexPagination]);
       }
+    }
+  }
+  showRole(rolename: string) {
+    if (rolename === 'ROLE_ADMIN') {
+      return 'Admin';
+    } else {
+      return 'User';
     }
   }
   refresh(): void {

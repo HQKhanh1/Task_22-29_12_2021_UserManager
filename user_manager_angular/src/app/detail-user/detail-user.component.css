@@ -1,18 +1,26 @@
 .detail-box {
+  display: block;
   position: relative;
-  margin: 40px auto;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-bottom: 40px;
+  margin-right: auto;
+
   width: 500px;
   height: auto;
-  background-color: #fff;
-  padding: 12px;
+  min-width: 380px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
   padding-bottom: 50px;
   border-radius: 10px;
-  box-shadow: 3px 2px 20px 5px rgba(68, 155, 255, 0.33);
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
+  box-shadow: 3px 2px 20px 5px rgba(0, 0, 0, 0.33);
 }
 
 .lb-header {
   position: relative;
-  color: rgb(43, 43, 43);
+  color: #00415d;
   margin: 5px 5px 10px 5px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
@@ -21,18 +29,24 @@
 }
 
 .lb-header a {
-  margin: 5px 5px 10px 5px;
+  margin: 0 25px;
   padding: 0 20px;
   text-decoration: none;
-  color: rgb(43, 43, 43);
+  color: rgb(29, 28, 28);
   font-weight: bold;
-  font-size: 30px;
+  font-size: 27px;
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 
-.user-detail {
+.lb-header .active {
+  color: #051f91;
+  font-size: 25px;
+  text-decoration: underline;
+}
+
+.detail {
   position: relative;
   width: 100%;
   height: auto;
@@ -42,26 +56,80 @@
 
 .u-form-group {
   width: 100%;
+  height: 100%;
+  max-height: auto;
   margin-bottom: 10px;
 }
 
 .u-form-group input[type="email"],
 .u-form-group input[type="text"] {
-  width: 100%;
+  width: calc(79% - 50px);
   height: 45px;
   outline: none;
   border: 1px solid #ddd;
   padding: 0 10px;
   border-radius: 2px;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1rem;
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 
-.u-form-group label {
-  width: 100%;
-  text-align: left;
+.u-form-group input[type="text-name"],
+.u-form-group input[type="password"] {
+  width: calc(43.4% - 50px);
+  height: 45px;
+  outline: none;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  border-radius: 2px;
+  color: #333;
   font-size: 1rem;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.u-form-group button[type="submit"]{
+  width: 20%;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  border-radius: 2px;
+  text-transform: uppercase;
+  margin-left: 75.5px;
+
+}
+.u-form-group button[type="button"] {
+  width: 20%;
+  background-color: #295aea;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 5px;
+  text-transform: uppercase;
+  margin-right: 75.5px;
+}
+.u-form-group label{
+  /* position: absolute; */
+  bottom: 10px;
+  left: 0;
+  color: grey;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.u-form-group mat-select {
+  overflow: hidden;
+  width: calc(79% - 50px);
+  height: 30px;
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  color: #333;
+  font-size: 1rem;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
 }

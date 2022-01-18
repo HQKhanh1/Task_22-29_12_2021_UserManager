@@ -72,6 +72,13 @@ export class InfoComponent implements OnInit {
       }
     }
   }
+  showRole(rolename: string) {
+    if (rolename === 'ROLE_ADMIN') {
+      return 'Admin';
+    } else {
+      return 'User';
+    }
+  }
   public goBack() {
     history.back();
   }

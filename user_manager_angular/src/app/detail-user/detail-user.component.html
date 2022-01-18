@@ -1,36 +1,54 @@
-<div class="detail-box">
+<form class="detail-box" [formGroup]="formEditUser" (ngSubmit)="update()">
   <div class="lb-header">
     <a>User Detail</a>
   </div>
-  <form class="user-detail">
+  <div class="detail">
     <div class="u-form-group">
-      <label>Username:</label>
-      <br>
-      <input type="text" readonly value="{{user.username}}" />
+      <mat-label style="margin-right: 250px;color: grey;">User name </mat-label>
+      <input style="color: grey;" type="text" placeholder="Username" readonly value="{{formEditUser.value.username}}" />
     </div>
     <div class="u-form-group">
-      <label>First Name: </label>
+      <mat-label style="margin-right: 85px ;">
+        <a>First name</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a>Last name</a>
+      </mat-label>
       <br>
-      <input type="text" readonly value="{{user.firstname}}" />
+      <input type="text-name" placeholder="Firstname" formControlName="firstname" value="{{formEditUser.value.firstname}}" />
+      &nbsp;
+      <input type="text-name" placeholder="Lastname" formControlName="lastname" value="{{formEditUser.value.lastname}}" />
     </div>
     <div class="u-form-group">
-      <label>Last name:</label>
-      <br>
-      <input type="text" readonly value="{{user.lastname}}" />
+      <mat-error class="alert-danger" *ngIf="formEditUser.get('firstname')?.errors && submitted">
+        Firstname is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formEditUser.get('lastname')?.errors && submitted">
+        Lastname is required</mat-error>
     </div>
     <div class="u-form-group">
-      <label>Email:</label>
-      <br>
-      <input type="email" readonly value="{{user.email}}" />
+      <mat-label style="margin-right: 290px;">Email</mat-label>
+      <input type="email" placeholder="Email" email formControlName="email" value="{{formEditUser.value.email}}" />
     </div>
     <div class="u-form-group">
-      <label>Role:</label>
-      <br>
-      <input type="text" readonly value="{{user.roleName}}" />
+      <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['required'] && submitted">
+        Email is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['email'] && submitted">
+        Email is invalidate</mat-error>
     </div>
-    <button type="button" (click)="goBack()" class="btn btn-warning float-right"
-        style="background-color: rgb(87, 87, 87); color: rgb(255, 255, 255); border-color: black;">
+    <div class="u-form-group">
+      <mat-label style="margin-right: 295px;">Role</mat-label>
+      <mat-select placeholder="{{showRole(user.roleName)}}" [(ngModel)]="selectRole"
+        [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange()">
+        <mat-option style="text-align: center;" *ngFor="let role of optionsRole" [value]="role.value">
+          {{role.nameValue}}</mat-option>
+      </mat-select>
+    </div>
+    <br>
+    <div class="u-form-group">
+      <button type="submit" class="btn btn-success float-left" [disabled]="!formEditUser.valid">Update</button>
+      <button type="button" (click)="goBack()" class="btn btn-warning float-right"
+        style="background-color: rgb(87, 87, 87);">
         Back
       </button>
-  </form>
-</div>
+    </div>
+  </div>
+</form>
