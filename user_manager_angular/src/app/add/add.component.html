@@ -1,6 +1,6 @@
 <form class="signup-box" [formGroup]="formCreate" (ngSubmit)="signUp()">
   <div class="lb-header">
-    <a>CREATE USER</a>
+    <a>Create User</a>
   </div>
   <div class="signup">
     <div class="u-form-group">
@@ -56,6 +56,9 @@
     <div class="u-form-group">
       <mat-error class="alert-danger" *ngIf="!selectRole && submitted">
         Role requied</mat-error>
+    </div>
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="error"> {{error}}</mat-error>
     </div>
     <br>
     <div class="u-form-group">

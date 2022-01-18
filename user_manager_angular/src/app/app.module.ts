@@ -24,6 +24,7 @@ import { InfoComponent } from './info/info.component';
 import { CheckpassComponent } from './checkpass/checkpass.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 import { ViewUserComponent } from './user/view-user/view-user.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 // import { MDBBootstrapModule } from 'angularbootstrap-md';
 @NgModule({
@@ -55,7 +56,8 @@ import { ViewUserComponent } from './user/view-user/view-user.component';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -5,7 +5,7 @@
   <div class="signup">
     <div class="u-form-group">
       <mat-label style="margin-right: 250px;">User name </mat-label>
-      <input type="text" placeholder="Username" readonly value="{{formUpdate.value.username}}"/>
+      <input type="text" placeholder="Username" readonly value="{{formUpdate.value.username}}" />
     </div>
     <div class="u-form-group">
       <mat-label style="margin-right: 80px ;">
@@ -13,7 +13,8 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a>Last name</a>
       </mat-label>
-      <input type="text-name" placeholder="Firstname" value="{{formUpdate.value.firstname}}" formControlName="firstname" />
+      <input type="text-name" placeholder="Firstname" value="{{formUpdate.value.firstname}}"
+        formControlName="firstname" />
       &nbsp;
       <input type="text-name" placeholder="Lastname" value="{{formUpdate.value.lastname}}" formControlName="lastname" />
     </div>
@@ -36,10 +37,11 @@
 
     <div class="u-form-group">
       <mat-label style="margin-right: 295px;">Role</mat-label>
-      <input type="text" placeholder="role" formControlName="role" readonly value="{{showRole(formUpdate.value.role)}}" />
+      <input type="text" placeholder="role" readonly
+        value="{{showRole(user.roleName)}}" />
     </div>
     <div class="u-form-group">
-      <button type="submit"  class="btn btn-success float-left">Update</button>
+      <button type="submit" class="btn btn-success float-left">Update</button>
       <button type="button" (click)="goBack()" class="btn btn-warning float-right"
         style="background-color: rgb(87, 87, 87); color: rgb(255, 255, 255); border-color: black;">
         Back

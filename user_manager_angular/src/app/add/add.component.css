@@ -38,7 +38,6 @@
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
-  text-transform: uppercase;
 }
 
 .lb-header .active {

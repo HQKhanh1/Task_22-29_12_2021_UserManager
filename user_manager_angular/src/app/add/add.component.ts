@@ -51,7 +51,8 @@ export class AddComponent implements OnInit {
     console.log('this.submitted:  ', this.submitted);
     console.log('this.formCreate.valid:  ', this.formCreate.valid);
     console.log('Checkpass: ', this.checkPasswords());
-    if (this.formCreate.valid && this.checkPasswords()) {
+    console.log("this.selectRole: ", !this.selectRole)
+    if (this.formCreate.valid && this.checkPasswords() && this.selectRole != '') {
       console.log('bam do r ne');
       console.log('this.submitted:  ', this.submitted);
       console.log('this.formCreate.valid:  ', this.formCreate.valid);
@@ -66,11 +67,12 @@ export class AddComponent implements OnInit {
       this.signUpService.signUpUser(this.user).subscribe((data: any) => {
         console.log('Status code: ', data.statusCode);
         this.error = this.messageError.messageError(data.statusCode);
+        if (!data.statusCode) {
+          alert('Successful create new user!');
+        }
       });
 
-      if (this.error === '') {
-        alert('Successful registration, please login!');
-      }
+
     }
   }
   public goBack() {

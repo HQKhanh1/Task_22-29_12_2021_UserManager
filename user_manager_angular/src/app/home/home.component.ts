@@ -11,6 +11,7 @@ import { HttpServiceService } from 'src/service/http-service.service';
 })
 export class HomeComponent implements OnInit {
   user: User[] = [];
+  public searchText : any;
   indexPagination: number = 1;
   public searchUser: FormGroup = new FormGroup({});
   listUserNotPagination: User[] = [];

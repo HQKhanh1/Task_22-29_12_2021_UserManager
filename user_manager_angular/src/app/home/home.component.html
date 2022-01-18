@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="container-fluid">
     <form [formGroup]="searchUser" (ngSubmit)="search()">
@@ -58,7 +57,7 @@
         </tr>
       </thead>
       <tbody style="font-size: 16px;text-align: center">
-        <tr *ngFor="let data of user">
+        <tr *ngFor="let data of user ">
           <td style="text-align: center">{{data.username}}</td>
           <td style="text-align: center">{{data.firstname}}</td>
           <td style="text-align: center">{{data.lastname }}</td>
