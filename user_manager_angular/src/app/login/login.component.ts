@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
                 .getUserByUsername(this.username)
                 .subscribe((data: User) => {
                   console.log('ROLE NAME: ', data.roleName);
+                  sessionStorage.setItem('rolename', data.roleName);
                   if (data.roleName === 'ROLE_ADMIN') {
                     this.router.navigate(['home']);
                   } else {

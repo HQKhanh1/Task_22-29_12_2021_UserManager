@@ -19,6 +19,13 @@ export class NavbarComponent implements OnInit {
       '\n\n\n'
     );
   }
+  home(){
+    if(sessionStorage.getItem('rolename') === 'ROLE_ADMIN'){
+      this.router.navigate(['home']);
+    }else{
+      this.router.navigate(['viewuser']);
+    }
+  }
   selectItem() {
     if (!this.username) {
       this.username = sessionStorage.getItem('username');
