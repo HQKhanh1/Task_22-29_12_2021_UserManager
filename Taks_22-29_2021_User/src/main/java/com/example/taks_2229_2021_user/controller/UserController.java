@@ -99,12 +99,10 @@ public class UserController {
     public ResponseEntity<Users> createUser(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('USER')")
-    @PutMapping("/{username}")
-    public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException {
+    @PutMapping("/update/{username}")
+    public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException, UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.updateUser(name, users), HttpStatus.OK);
     }
-    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/change/{username}")
     public ResponseEntity<Boolean> changePassword(@PathVariable("username") String name, @RequestBody UserDto userDto) throws UsernameException, JsonProcessingException {
         return new ResponseEntity<>(usersService.changePassword(userDto.getPassword(), name), HttpStatus.OK);

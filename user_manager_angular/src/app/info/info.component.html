@@ -4,8 +4,8 @@
   </div>
   <div class="signup">
     <div class="u-form-group">
-      <mat-label style="margin-right: 250px;">User name </mat-label>
-      <input type="text" placeholder="Username" readonly value="{{formUpdate.value.username}}" />
+      <mat-label style="margin-right: 250px;color: grey;">User name </mat-label>
+      <input type="text" style="color: grey;" placeholder="Username" readonly value="{{formUpdate.value.username}}" />
     </div>
     <div class="u-form-group">
       <mat-label style="margin-right: 80px ;">
@@ -34,12 +34,9 @@
       <mat-error class="alert-danger" *ngIf="formUpdate.get('email')?.errors?.['email'] && submitted">
         Email is invalidate</mat-error>
     </div>
-
-    <!-- <div class="u-form-group">
-      <mat-label style="margin-right: 295px;">Role</mat-label>
-      <input type="text" placeholder="role" readonly
-        value="{{showRole(user.roleName)}}" />
-    </div> -->
+    <div class="u-form-group">
+      <mat-error class="alert-danger" *ngIf="error"> {{error}}</mat-error>
+    </div>
     <div class="u-form-group">
       <button type="submit" class="btn btn-success float-left">Update</button>
       <button type="button" (click)="goBack()" class="btn btn-warning float-right"

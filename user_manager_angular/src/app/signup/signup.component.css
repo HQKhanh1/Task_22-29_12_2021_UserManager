@@ -22,8 +22,8 @@
   position: relative;
   color: #00415d;
   margin: 5px 5px 10px 5px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgb(16, 106, 180);
   text-align: center;
   height: 28px;
 }
@@ -116,8 +116,18 @@
   margin-right: 75.5px;
 
 }
-.u-form-group .error {
-  color: red;
-  text-align: center;
-  margin: auto;
+.u-form-group mat-error {
+  width: calc(79% - 50px);
+  height: 45px;
+  outline: none;
+  border: 1px solid #ddd;
+  padding: 0 10px;
+  border-radius: 2px;
+  color: rgb(255, 1, 1);
+  font-size: 1rem;
+  border-radius: 2px;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
 }
+

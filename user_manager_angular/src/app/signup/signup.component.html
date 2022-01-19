@@ -8,8 +8,8 @@
       <input type="text" placeholder="Username" formControlName="username" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formSignUp.get('username')?.errors?.['required'] && submitted">
-        Username is required</div>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('username')?.errors?.['required'] && submitted">
+        Username is required</mat-error>
     </div>
     <div class="u-form-group">
       <input type="text-name" placeholder="Firstname" formControlName="firstname" />
@@ -17,19 +17,19 @@
       <input type="text-name" placeholder="Lastname" formControlName="lastname" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formSignUp.get('firstname')?.errors && submitted">
-        Firstname is required</div>
-      <div class="error" *ngIf="formSignUp.get('lastname')?.errors && submitted">
-        Lastname is required</div>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('firstname')?.errors && submitted">
+        Firstname is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('lastname')?.errors && submitted">
+        Lastname is required</mat-error>
     </div>
     <div class="u-form-group">
       <input type="email" placeholder="Email" email formControlName="email" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formSignUp.get('email')?.errors?.['required'] && submitted">
-        Email is required</div>
-      <div class="error" *ngIf="formSignUp.get('email')?.errors?.['email'] && submitted">
-        Email is invalidate</div>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('email')?.errors?.['required'] && submitted">
+        Email is required</mat-error>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('email')?.errors?.['email'] && submitted">
+        Email is invalidate</mat-error>
     </div>
     <div class="u-form-group">
       <input type="password" placeholder="Password" formControlName="pass" />
@@ -37,18 +37,18 @@
       <input type="password" placeholder="Confirm Password" formControlName="confPass" />
     </div>
     <div class="u-form-group">
-      <div class="error" *ngIf="formSignUp.get('pass')?.errors?.['required'] && submitted">
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('pass')?.errors?.['required'] && submitted">
         Password is required
-      </div>
-      <div class="error" *ngIf="formSignUp.get('confPass')?.errors?.['required'] && submitted">
+      </mat-error>
+      <mat-error class="alert-danger" *ngIf="formSignUp.get('confPass')?.errors?.['required'] && submitted">
         Confirm Password is required
-      </div>
-      <div class="error" *ngIf="!this.checkPasswords() && submitted">
+      </mat-error>
+      <mat-error class="alert-danger" *ngIf="!this.checkPasswords() && submitted">
         Password and confirm password do not match
-      </div>
+      </mat-error>
     </div>
     <div class="u-form-group">
-      <span class="error" *ngIf="error"> {{error}}</span>
+      <mat-error class="alert-danger" *ngIf="error"> {{error}}</mat-error>
     </div>
     <div class="u-form-group">
       <button type="submit"  class="btn btn-primary float-left">Sign

@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/checkemail/**").permitAll()
                 .antMatchers(HttpMethod.PUT,"/user/change/**").permitAll()
+                .antMatchers(HttpMethod.PUT,"/user/update/**").hasAnyRole("ADMIN","USER")
                 .antMatchers("/", "/user/login").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET, "/user/finduser/**").hasAnyRole("ADMIN","USER")
                 .antMatchers(HttpMethod.GET, "/user/check/**").hasAnyRole("ADMIN","USER")

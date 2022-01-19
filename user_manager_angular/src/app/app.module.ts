@@ -25,6 +25,7 @@ import { CheckpassComponent } from './checkpass/checkpass.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 import { ViewUserComponent } from './user/view-user/view-user.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MatSortModule } from '@angular/material/sort';
 
 // import { MDBBootstrapModule } from 'angularbootstrap-md';
 @NgModule({
@@ -57,7 +58,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent],

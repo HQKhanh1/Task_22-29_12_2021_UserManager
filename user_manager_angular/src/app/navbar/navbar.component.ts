@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  public username: string | null = sessionStorage.getItem('username');
+  public username: string | null = '';
   constructor(public loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
     this.username = sessionStorage.getItem('username');
+    console.log('username: ', this.username);
   }
   public loadHome(): any {
     if (sessionStorage.getItem('rolename') === 'ROLE_ADMIN') {
@@ -30,9 +31,8 @@ export class NavbarComponent implements OnInit {
     }
   }
   selectItem() {
-    if (!this.username) {
-      this.username = sessionStorage.getItem('username');
-    }
+    this.username = sessionStorage.getItem('username');
+    console.log('username: ', this.username);
     this.router.navigate(['info/' + this.username]);
   }
   changePass() {

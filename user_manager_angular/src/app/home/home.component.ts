@@ -4,6 +4,7 @@ import { User } from '../model/user';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpServiceService } from 'src/service/http-service.service';
+import { Sort } from '@angular/material/sort';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,6 +12,7 @@ import { HttpServiceService } from 'src/service/http-service.service';
 })
 export class HomeComponent implements OnInit {
   user: User[] = [];
+  sortedData: User[] = [];
   public searchText: any;
   indexPagination: number = 1;
   public searchUser: FormGroup = new FormGroup({});
@@ -24,7 +26,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
 
     private routerA: ActivatedRoute
-  ) {}
+  ) {
+  }
   public ngOnInit() {
     if (this.routerA.snapshot.params['id']) {
       this.indexPagination = this.routerA.snapshot.params['id'];
@@ -52,6 +55,7 @@ export class HomeComponent implements OnInit {
         this.submitted = false;
         this.searchResult = '';
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.searchUser = new FormGroup({
       username: new FormControl(''),
@@ -86,13 +90,14 @@ export class HomeComponent implements OnInit {
         )
         .subscribe((data: any) => {
           this.user = data;
+          this.sortedData = this.user.slice();
           if (this.user.length === 0) {
             this.searchResult = 'No result found';
           }
         });
     }
   }
-  loadHome(){
+  loadHome() {
     location.reload();
   }
   public findPaginnation() {
@@ -100,6 +105,7 @@ export class HomeComponent implements OnInit {
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.router.navigate(['home', this.indexPagination]);
   }
@@ -114,6 +120,7 @@ export class HomeComponent implements OnInit {
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.router.navigate(['home', this.indexPagination]);
   }
@@ -127,6 +134,7 @@ export class HomeComponent implements OnInit {
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.router.navigate(['home', this.indexPagination]);
   }
@@ -142,6 +150,7 @@ export class HomeComponent implements OnInit {
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.router.navigate(['home', this.indexPagination]);
   }
@@ -152,6 +161,7 @@ export class HomeComponent implements OnInit {
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
         this.user = data.users;
+        this.sortedData = this.user.slice();
       });
     this.router.navigate(['home', this.indexPagination]);
   }
@@ -166,6 +176,7 @@ export class HomeComponent implements OnInit {
           .getAllUser(this.indexPagination - 1)
           .subscribe((data: any) => {
             this.user = data.users;
+            this.sortedData = this.user.slice();
           });
         this.router.navigate(['home', this.indexPagination]);
       } else {
@@ -181,6 +192,34 @@ export class HomeComponent implements OnInit {
     } else {
       return 'User';
     }
+  }
+  sortData(sort: Sort) {
+    const data = this.user.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'username':
+          return this.compare(a.username, b.username, isAsc);
+        case 'firstname':
+          return this.compare(a.firstname, b.firstname, isAsc);
+        case 'lastname':
+          return this.compare(a.lastname, b.lastname, isAsc);
+        case 'email':
+          return this.compare(a.email, b.email, isAsc);
+        case 'role':
+          return this.compare(a.roleName, b.roleName, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+  public compare(a: string, b: string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
   refresh(): void {
     window.location.reload();

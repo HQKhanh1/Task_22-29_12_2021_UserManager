@@ -58,12 +58,13 @@ export class InfoComponent implements OnInit {
       this.user.email = this.formUpdate.value.email.toLowerCase();
       this.user.roleName = this.formUpdate.value.role;
       this.httpService.update(this.user).subscribe((data: any) => {
-        this.error = this.messageError.messageError(data.statusCode);
+        if (data.statusCode) {
+          this.error = this.messageError.messageError(data.statusCode);
+        } else {
+          alert('Successful update!');
+          this.error = '';
+        }
       });
-
-      if (this.error === '') {
-        alert('Successful update!');
-      }
     }
   }
   showRole(rolename: string) {

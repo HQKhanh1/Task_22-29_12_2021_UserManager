@@ -32,6 +32,7 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private ClientService clientService;
     private DataUtils dataUtils;
+
     private UserDto mapToDTO(Users users) {
         UserDto userDto = new UserDto();
         userDto.setUsername(users.getUsername());
@@ -139,6 +140,7 @@ public class UsersServiceImpl implements UsersService {
         usersRepository.save(users);
         return users;
     }
+
     @Override
     public Boolean changePassUserThenForgotPas(Users users) {
         users.setPassword(DataUtils.generateTempPwd(8));
@@ -149,11 +151,16 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users updateUser(String userName, Users users) throws UsernameException {
+    public Users updateUser(String userName, Users users) throws UsernameException, UsernameExitException, MailException {
         Users usersS = usersRepository.findById(userName).orElse(null);
         if (usersS == null) {
             throw new UsernameException("User not found");
         } else {
+            if (!users.getEmail().equals(usersS.getEmail())) {
+                checkEmail(users);
+            } else if (!users.getUsername().equals(usersS.getUsername())) {
+                checkUsername(users);
+            }
             usersS = new Users(users.getUsername(), users.getPassword(), users.getFirstname(), users.getLastname(), users.getEmail(), users.getRoleName());
             usersRepository.save(usersS);
             return usersS;
@@ -172,18 +179,31 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public List<Users> getAllVaccineDTONotPagination() {
-        return usersRepository.findAll();
-    }
-    @Override
-    public Users checkMailForgotPass(String email){
-        for(Users users : new ArrayList<>(usersRepository.findAll())){
-            if(email.equals(users.getEmail())){
+    public Users checkMailForgotPass(String email) {
+        for (Users users : new ArrayList<>(usersRepository.findAll())) {
+            if (email.equals(users.getEmail())) {
                 return users;
             }
         }
         return null;
     }
+
+    private void checkEmail(Users users) throws MailException {
+        for (Users userCheck : new ArrayList<>(usersRepository.findAll())) {
+            if (users.getEmail().equals(userCheck.getEmail())) {
+                throw new MailException("User with email: " + users.getEmail() + " already existed");
+            }
+        }
+    }
+
+    private void checkUsername(Users users) throws UsernameExitException {
+        for (Users userCheck : new ArrayList<>(usersRepository.findAll())) {
+            if (users.getUsername().equals(userCheck.getUsername())) {
+                throw new UsernameExitException("Username: " + users.getUsername() + " already existed");
+            }
+        }
+    }
+
     private void checkEmailOrUsername(Users users) throws MailException, UsernameExitException {
         for (Users userCheck : new ArrayList<>(usersRepository.findAll())) {
             if (users.getEmail().equals(userCheck.getEmail())) {

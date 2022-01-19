@@ -16,8 +16,8 @@
   position: relative;
   color: #00415d;
   margin: 5px 5px 10px 5px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgb(16, 106, 180);
   text-align: center;
   height: 28px;
 }

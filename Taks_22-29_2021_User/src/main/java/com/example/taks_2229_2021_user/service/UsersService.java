@@ -15,9 +15,8 @@ public interface UsersService {
     UserResponse getAllUsersPage(int pageNo, int pageSize, String sortBy, String sortDir);
     Users getUserByUserName(String name) throws UsernameException;
     List<Users> getAllUsers();
-    List<Users> getAllVaccineDTONotPagination();
     Users createUser(Users users) throws UsernameExitException, MailException;
-    Users updateUser(String userName, Users users) throws UsernameException;
+    Users updateUser(String userName, Users users) throws UsernameException, UsernameExitException, MailException;
     Users deleteUser(String name) throws UsernameException;
     Users checkMailForgotPass(String email);
     Boolean checkPassword(String password, String username) throws UsernameException;

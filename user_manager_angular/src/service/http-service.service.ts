@@ -110,7 +110,7 @@ export class HttpServiceService {
       }).set('Content-Type', 'application/json'),
     };
     return this.httpClient.put<any>(
-      this.REST_API_SERVER + '/' + user.username,
+      this.REST_API_SERVER + '/update/' + user.username,
       JSON.stringify(user),
       this.httpOptions
     );

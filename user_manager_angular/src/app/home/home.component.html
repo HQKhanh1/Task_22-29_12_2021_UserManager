@@ -49,24 +49,24 @@
       <button class="btn btn-primary float-right" (click)="loadHome()"><i class="fa fa-home"></i>Home</button>
     </div>
     <div *ngIf="submitted === true">
-      <h1>Search results</h1>
+      <h1 style="font-weight: bold;">Search results</h1>
     </div>
-    <div *ngIf="submitted === true && searchResult" style="margin-bottom: 5px;">
+    <div style="margin: auto;" *ngIf="submitted === true && searchResult" style="margin-bottom: 5px;">
       <h3>{{searchResult}}</h3>
     </div>
-    <table *ngIf="!searchResult" class="table table-hover table-bordered">
+    <table *ngIf="!searchResult" matSort (matSortChange)="sortData($event)" class="table table-hover table-bordered">
       <thead>
         <tr class="bg-table-header">
-          <th scope="col">Username</th>
-          <th scope="col">First name</th>
-          <th scope="col">Last name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Role</th>
-          <th scope="col">Actions</th>
+          <th mat-sort-header="username">Username</th>
+          <th mat-sort-header="firstname">First name</th>
+          <th mat-sort-header="lastname" >Last name</th>
+          <th mat-sort-header="email" >Email</th>
+          <th mat-sort-header="role" >Role</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody style="font-size: 16px;text-align: center">
-        <tr *ngFor="let data of user ">
+        <tr *ngFor="let data of sortedData ">
           <td style="text-align: center">{{data.username}}</td>
           <td style="text-align: center">{{data.firstname}}</td>
           <td style="text-align: center">{{data.lastname }}</td>
