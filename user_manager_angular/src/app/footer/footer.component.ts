@@ -11,11 +11,12 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  home() {
+  public homepage() :string {
+    console.log('role ne: ', sessionStorage.getItem('rolename'))
     if (sessionStorage.getItem('rolename') === 'ROLE_ADMIN') {
-      this.router.navigate(['home']);
+      return 'home';
     } else {
-      this.router.navigate(['viewuser']);
+      return 'viewuser';
     }
   }
 }
