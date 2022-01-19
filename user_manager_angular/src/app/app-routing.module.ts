@@ -61,6 +61,7 @@ const routes: Routes = [
   {
     path: 'viewuser',
     component: ViewUserComponent,
+    canActivate: [AuthGaurdServiceService],
   },
   {
     path: '',

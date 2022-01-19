@@ -13,17 +13,20 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = sessionStorage.getItem('username');
-    console.log(
-      '\n\n\nusername trong navbar:',
-      sessionStorage.getItem('username'),
-      '\n\n\n'
-    );
   }
-  home(){
-    if(sessionStorage.getItem('rolename') === 'ROLE_ADMIN'){
-      this.router.navigate(['home']);
-    }else{
-      this.router.navigate(['viewuser']);
+  public loadHome(): any {
+    if (sessionStorage.getItem('rolename') === 'ROLE_ADMIN') {
+      if (location.href === 'http://localhost:4200/home') {
+        location.reload();
+      } else {
+        this.router.navigate(['home']);
+      }
+    } else {
+      if (location.href === 'http://localhost:4200/viewuser') {
+        location.reload();
+      } else {
+        this.router.navigate(['viewuser']);
+      }
     }
   }
   selectItem() {

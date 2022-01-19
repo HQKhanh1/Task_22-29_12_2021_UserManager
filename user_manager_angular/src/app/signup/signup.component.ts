@@ -40,29 +40,21 @@ export class SignupComponent implements OnInit {
   public signUp() {
     this.submitted = true;
     if (this.formSignUp.valid && this.checkPasswords()) {
-      console.log('bam do r ne');
-      console.log('this.submitted:  ', this.submitted);
-      console.log('this.formSignUp.valid:  ', this.formSignUp.valid);
-      console.log('Checkpass: ', this.checkPasswords());
       this.user.username = this.formSignUp.value.username;
       this.user.firstname = this.formSignUp.value.firstname;
       this.user.lastname = this.formSignUp.value.lastname;
       this.user.email = this.formSignUp.value.email.toLowerCase();
       this.user.password = this.formSignUp.value.pass;
       this.user.roleName = 'ROLE_USER';
-      console.log('User: ', this.user);
       this.signUpService.signUpUser(this.user).subscribe((data: any) => {
-        console.log('null statuscoe');
         if (data.statusCode) {
           this.error = this.messageError.messageError(data.statusCode);
         } else {
           this.signUpService.sendMail(this.user).subscribe((data: any) => {
-            console.log('data mail: ', data);
           });
           if (confirm('Successful registration, please login!')) {
             this.router.navigate(['login']);
           }
-          console.log('null statuscoe');
         }
       });
     }
@@ -76,7 +68,6 @@ export class SignupComponent implements OnInit {
   }
   public onReset(): void {
     this.submitted = false;
-    console.log('this.submitted:  ', this.submitted);
     this.error = '';
     this.formSignUp.reset();
   }

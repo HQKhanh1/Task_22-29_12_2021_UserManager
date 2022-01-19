@@ -19,8 +19,6 @@ export class LoginService {
   constructor(private httpClient: HttpClient) {}
 
   public authenticate(username: string, password: string): Observable<any> {
-    console.log(username);
-    console.log(password);
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + btoa(username + ':' + password),
     });
@@ -28,25 +26,14 @@ export class LoginService {
       .get<any>('http://localhost:8080/user/login', {
         headers,
         responseType: 'json',
-      })
-      .pipe(
-        tap(
-          // Log the result or error
-          (error) => console.log('data login ne:', error)
-        )
-      );
+      });
   }
   public findUsersByEmail(email: string) {
-    console.log(
-      'API EMAIL: ',
-      'http://localhost:8080/user/checkemail/' + email
-    );
     return this.httpClient.get<any>(
       'http://localhost:8080/user/checkemail/' + email
     );
   }
   public changePassUserThenForgotPass(user: User) {
-    console.log('Json USER: ', JSON.stringify(user));
     return this.httpClient.post<any>(
       'http://localhost:8080/user/changePassForgot',
       JSON.stringify(user),

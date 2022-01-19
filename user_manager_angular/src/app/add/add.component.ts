@@ -44,31 +44,19 @@ export class AddComponent implements OnInit {
       : false;
   }
   public onChange() {
-    console.log('Role: ', this.selectRole);
   }
   public signUp() {
-    this.submitted = true;console.log('bam do r ne');
-    console.log('this.submitted:  ', this.submitted);
-    console.log('this.formCreate.valid:  ', this.formCreate.valid);
-    console.log('Checkpass: ', this.checkPasswords());
-    console.log("this.selectRole: ", !this.selectRole)
+    this.submitted = true;
     if (this.formCreate.valid && this.checkPasswords() && this.selectRole != '') {
-      console.log('bam do r ne');
-      console.log('this.submitted:  ', this.submitted);
-      console.log('this.formCreate.valid:  ', this.formCreate.valid);
-      console.log('Checkpass: ', this.checkPasswords());
       this.user.username = this.formCreate.value.username;
       this.user.firstname = this.formCreate.value.firstname;
       this.user.lastname = this.formCreate.value.lastname;
       this.user.email = this.formCreate.value.email.toLowerCase();
       this.user.password = this.formCreate.value.pass;
       this.user.roleName = this.selectRole;
-      console.log('User: ', this.user);
       this.signUpService.signUpUser(this.user).subscribe((data: any) => {
-        console.log('Status code: ', data.statusCode);
         this.error = this.messageError.messageError(data.statusCode);
         if (!data.statusCode) {
-          alert('Successful create new user!');
         }
       });
 

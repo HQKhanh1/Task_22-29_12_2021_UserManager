@@ -48,22 +48,16 @@ export class InfoComponent implements OnInit {
         role: new FormControl(this.user.roleName),
       });
     });
-    console.log('DData: ', this.user);
   }
   public update() {
     this.submitted = true;
     if (this.formUpdate.valid) {
-      console.log('bam do r ne');
-      console.log('this.submitted:  ', this.submitted);
-      console.log('this.formUpdate.valid:  ', this.formUpdate.valid);
       this.user.username = this.formUpdate.value.username;
       this.user.firstname = this.formUpdate.value.firstname;
       this.user.lastname = this.formUpdate.value.lastname;
       this.user.email = this.formUpdate.value.email.toLowerCase();
       this.user.roleName = this.formUpdate.value.role;
-      console.log('User: ', this.user);
       this.httpService.update(this.user).subscribe((data: any) => {
-        console.log('Status code: ', data.statusCode);
         this.error = this.messageError.messageError(data.statusCode);
       });
 

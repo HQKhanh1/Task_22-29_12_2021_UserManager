@@ -25,7 +25,6 @@ export class HttpServiceService {
         Authorization: this.headers,
       }).set('Content-Type', 'application/json'),
     };
-    console.log('header trong lay page: ', this.headers);
     return this.httpClient.get<any>(
       this.REST_API_SERVER + '/page?pageSize=5&pageNo=' + index,
       this.httpOptions
@@ -77,7 +76,6 @@ export class HttpServiceService {
           Authorization: this.headers,
         }).set('Content-Type', 'application/json'),
       };
-      console.log('lay trong http service: ', this.headers);
     } else {
       this.headers = sessionStorage.getItem('basicauth');
       this.httpOptions = {
@@ -92,7 +90,6 @@ export class HttpServiceService {
     );
   }
   public updatePassword(username: string, password: User): Observable<any> {
-    console.log('API USER: ', JSON.stringify(password));
     this.headers = sessionStorage.getItem('basicauth');
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -106,7 +103,6 @@ export class HttpServiceService {
     );
   }
   public update(user: User): Observable<any> {
-    console.log('API USER: ', JSON.stringify(user));
     this.headers = sessionStorage.getItem('basicauth');
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -120,7 +116,6 @@ export class HttpServiceService {
     );
   }
   public delete(user: User): Observable<any> {
-    console.log('url: ', this.REST_API_SERVER + '/' + user.username);
     this.headers = sessionStorage.getItem('basicauth');
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -133,9 +128,6 @@ export class HttpServiceService {
     );
   }
   public signUpUser(user: User): Observable<any> {
-    console.log('API USER: ', JSON.stringify(user));
-    console.log('Heloo dang ki chua xong dau ne: ');
-
     return this.httpClient.post<any>(
       this.REST_API_SERVER + '/signup',
       JSON.stringify(user),
@@ -143,8 +135,6 @@ export class HttpServiceService {
     );
   }
   public sendMail(user: User): Observable<any> {
-    console.log('API USER: ', JSON.stringify(user));
-    console.log('Heloo dang ki chua xong dau ne: ');
     return this.httpClient
       .post<any>(
         this.REST_API_SERVER + '/sendmail',
@@ -153,7 +143,6 @@ export class HttpServiceService {
       )
       .pipe(
         map((userData) => {
-          console.log('userData: ', userData);
           return userData;
         })
       );

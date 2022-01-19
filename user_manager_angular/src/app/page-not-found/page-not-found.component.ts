@@ -11,7 +11,6 @@ export class PageNotFoundComponent implements OnInit {
 
   ngOnInit(): void {}
   public homepage() :string {
-    console.log('role ne: ', sessionStorage.getItem('rolename'))
     if (sessionStorage.getItem('rolename') === 'ROLE_ADMIN') {
       return 'home';
     } else {

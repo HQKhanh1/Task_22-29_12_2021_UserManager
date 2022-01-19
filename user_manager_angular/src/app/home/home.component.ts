@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   public searchUser: FormGroup = new FormGroup({});
   listUserNotPagination: User[] = [];
   totalPagination: number = 0;
+  searchResult: string = '';
+  public submitted: any = '';
   min: number = 0;
   constructor(
     private httpServerService: HttpServiceService,
@@ -25,7 +27,6 @@ export class HomeComponent implements OnInit {
   ) {}
   public ngOnInit() {
     if (this.routerA.snapshot.params['id']) {
-      console.log('ID: ', this.routerA.snapshot.params['id']);
       this.indexPagination = this.routerA.snapshot.params['id'];
     }
     this.httpServerService.getAllUserNotPagination().subscribe((data: any) => {
@@ -39,25 +40,17 @@ export class HomeComponent implements OnInit {
             5 +
           1;
       }
-      console.log(
-        'tong user ',
-        (this.listUserNotPagination.length -
-          (this.listUserNotPagination.length % 5)) /
-          5 +
-          1
-      );
       if (this.totalPagination <= 0) {
         this.min = 0;
       } else {
         this.min = 1;
       }
-      console.log('tong trang ', this.totalPagination);
-      console.log('this.totalPagination', this.totalPagination);
-      console.log('min: ', this.min);
     });
     this.httpServerService
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
+        this.submitted = false;
+        this.searchResult = '';
         this.user = data.users;
       });
     this.searchUser = new FormGroup({
@@ -78,10 +71,12 @@ export class HomeComponent implements OnInit {
       this.searchUser.value.lastname.length === 0 &&
       this.searchUser.value.email.length === 0
     ) {
-      this.httpServerService.getAllUser(0).subscribe((data: any) => {
-        this.user = data.users;
-      });
+      location.href;
+      this.submitted = true;
+      this.searchResult = 'No result found';
     } else {
+      this.submitted = true;
+      this.searchResult = '';
       this.httpServerService
         .search(
           this.searchUser.value.username,
@@ -90,16 +85,16 @@ export class HomeComponent implements OnInit {
           this.searchUser.value.email
         )
         .subscribe((data: any) => {
-          console.log('User User', data);
-          return (this.user = data);
+          this.user = data;
+          if (this.user.length === 0) {
+            this.searchResult = 'No result found';
+          }
         });
-      console.log('username ', this.searchUser.value.username);
-      console.log('firstname ', this.searchUser.value.firstname);
-      console.log('lastname ', this.searchUser.value.lastname);
-      console.log('email ', this.searchUser.value.email);
     }
   }
-
+  loadHome(){
+    location.reload();
+  }
   public findPaginnation() {
     this.httpServerService
       .getAllUser(this.indexPagination - 1)
@@ -125,8 +120,6 @@ export class HomeComponent implements OnInit {
 
   public nextPage() {
     this.indexPagination = this.indexPagination + 1;
-    console.log('indexPagination ', this.indexPagination);
-    console.log('totalPagination ', this.totalPagination);
     if (this.indexPagination > this.totalPagination) {
       this.indexPagination = this.totalPagination;
     }
@@ -140,8 +133,6 @@ export class HomeComponent implements OnInit {
 
   public prviousPage() {
     this.indexPagination = this.indexPagination - 1;
-    console.log('indexPagination ', this.indexPagination);
-    console.log('totalPagination ', this.totalPagination);
     if (this.totalPagination <= 0 && this.indexPagination <= 0) {
       this.indexPagination = 0;
     } else if (this.indexPagination <= 0) {
@@ -150,7 +141,6 @@ export class HomeComponent implements OnInit {
     this.httpServerService
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
-        console.log(this.indexPagination);
         this.user = data.users;
       });
     this.router.navigate(['home', this.indexPagination]);
@@ -161,8 +151,6 @@ export class HomeComponent implements OnInit {
     this.httpServerService
       .getAllUser(this.indexPagination - 1)
       .subscribe((data: any) => {
-        console.log('trang ', this.indexPagination);
-        console.log('tong trang ', this.totalPagination);
         this.user = data.users;
       });
     this.router.navigate(['home', this.indexPagination]);
@@ -170,10 +158,7 @@ export class HomeComponent implements OnInit {
   public delete(userDelete: User) {
     var result = confirm('Are you sure to delete this user?');
     if (result) {
-      console.log('USerDelete: ', userDelete);
-      console.log('Trang dang xoa: ', this.indexPagination);
       if (this.user.length === 1) {
-        console.log('So luong con lai: ', this.user.length);
         this.indexPagination = this.indexPagination - 1;
         this.totalPagination = this.totalPagination - 1;
         this.httpServerService.delete(userDelete).subscribe();
@@ -181,7 +166,6 @@ export class HomeComponent implements OnInit {
           .getAllUser(this.indexPagination - 1)
           .subscribe((data: any) => {
             this.user = data.users;
-            console.log('User sau xoa: ', this.user);
           });
         this.router.navigate(['home', this.indexPagination]);
       } else {
@@ -202,7 +186,6 @@ export class HomeComponent implements OnInit {
     window.location.reload();
   }
   public detail(username: string) {
-    console.log('username: ', username);
     this.router.navigate(['detail', username]);
   }
   public checckAcc(username: string): boolean {

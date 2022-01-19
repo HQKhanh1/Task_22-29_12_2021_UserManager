@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <a class="fa fa-home fa-2x" mat-button routerLink="/home"> USER MANAGER </a>
+  <a class="fa fa-home fa-2x" mat-button (click)="loadHome()"> USER MANAGER </a>
   <div class="header">
   </div>
   <!-- <a mat-button routerLink="/home">Home</a> -->
@@ -8,7 +8,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #afterMenu="matMenu" xPosition="after">
-    <button class="fa fa-home fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="home()">
+    <button class="fa fa-home fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item (click)="loadHome()">
       Home</button>
     <button class="fa fa-info-circle fa-lg" *ngIf="this.loginService.isUserLoggedIn()" mat-menu-item
       (click)="selectItem()">

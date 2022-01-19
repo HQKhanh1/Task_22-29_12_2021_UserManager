@@ -22,7 +22,6 @@ export class PasswordService {
       )
       .pipe(
         map((userData:boolean) => {
-          console.log('Check Passssss: ', userData);
           return userData;
         })
       );

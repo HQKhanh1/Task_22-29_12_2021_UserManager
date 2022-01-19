@@ -41,7 +41,6 @@ export class CheckpassComponent implements OnInit {
   public checkPass() {
     this.submittedCurrentPass = true;
     if (this.formCurrentPass.valid) {
-      console.log('Bam do check pass roi ne');
       this.currentPass = this.formCurrentPass.value.currentPass;
       this.checkPassHttp
         .checkPass(this.username, this.currentPass)
@@ -53,36 +52,17 @@ export class CheckpassComponent implements OnInit {
   }
   public changePassword() {
     this.submittedChangePass = true;
-    console.log('Bam do roi ne change ');
     if (this.formCurrentPass.valid && this.checkMatchNewPass()) {
-      // this.user = new User(this.formChangePass.value.changePass);
-      // console.log(
-      //   'Bam do roi ne Bam do roi ne change va day la passssssssssss: ',
-      //   this.user.password
-      // );
       this.user.password = this.formChangePass.value.changePass;
-      console.log(
-        'Bam do roi ne Bam do roi ne change va day la passssssssssss: ',
-        this.user.password
-      );
       this.httpService
         .updatePassword(this.username, this.user)
         .subscribe((data: boolean) => {
           if (data) {
-            console.log('\n\n\n\ncheck pass: ', data, '\n\n\n\n');
             sessionStorage.removeItem('basicauth');
-            console.log(
-              'auth sau remove: ',
-              sessionStorage.getItem('basiccauth')
-            );
             sessionStorage.setItem(
               'basicauth',
               'Basic ' +
                 btoa(this.username + ':' + this.formChangePass.value.changePass)
-            );
-            console.log(
-              'sau khi doi pass: ',
-              sessionStorage.getItem('basicauth')
             );
             alert('Successfully change password');
             location.reload();

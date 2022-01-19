@@ -31,7 +31,7 @@ footer .container .noi-dung.about h2:before {
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 43%;
+  width: 20%;
   height: 2px;
   background: rgb(255, 0, 0);
 }
@@ -47,6 +47,7 @@ footer .container .noi-dung.about p {
 
 .social-icon li {
   list-style: none;
+  margin-left: -40px;
 }
 .social-icon li a {
   display: inline-block;
@@ -89,7 +90,7 @@ footer .container .noi-dung.about p {
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 60%;
+  width: 25%;
   height: 2px;
   background: #f00;
 }
@@ -99,14 +100,15 @@ footer .container .noi-dung.about p {
 }
 .links ul li {
   list-style: none;
+  margin-left: -50px;
 }
-.links ul li a {
+.links ul li button {
   color: rgb(255, 255, 255);
   text-decoration: none;
   margin-bottom: 10px;
   display: inline-block;
 }
-.links ul li a:hover {
+.links ul li button:hover {
   color: #fff;
 }
 
@@ -138,6 +140,7 @@ footer .container .noi-dung.about p {
 .contact .info li {
   display: flex;
   margin-bottom: 16px;
+  margin-left: -40px;
 }
 .contact .info li span:nth-child(1) {
   color: #fff;

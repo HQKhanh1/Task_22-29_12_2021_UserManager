@@ -54,25 +54,19 @@ export class DetailUserComponent implements OnInit {
         role: new FormControl(this.user.roleName),
       });
     });
-    console.log('DData: ', this.user);
   }
 
   public onChange() {
-    console.log('Role: ', this.selectRole);
   }
   public update() {
     this.submitted = true;
     if (this.formEditUser.valid) {
-      console.log('bam do r ne');
-      console.log('this.submitted:  ', this.submitted);
       this.user.username = this.formEditUser.value.username;
       this.user.firstname = this.formEditUser.value.firstname;
       this.user.lastname = this.formEditUser.value.lastname;
       this.user.email = this.formEditUser.value.email.toLowerCase();
       this.user.roleName = this.selectRole;
-      console.log('User: ', this.user);
       this.httpService.update(this.user).subscribe((data: any) => {
-        console.log('Status code: ', data.statusCode);
         this.error = this.messageError.messageError(data.statusCode);
       });
 

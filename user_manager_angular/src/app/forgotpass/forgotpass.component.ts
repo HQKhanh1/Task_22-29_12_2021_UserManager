@@ -32,20 +32,14 @@ export class ForgotpassComponent implements OnInit {
   public checkPass() {
     this.submittedCheckPass = true;
     if (this.formCheckMail.valid) {
-      console.log(
-        'Bam do gui mail r ne roi ne',
-        this.formCheckMail.value.email
-      );
       this.sendPassService
         .findUsersByEmail(this.formCheckMail.value.email)
         .subscribe((data: User) => {
-          console.log('Kiem tra mail thanh cong', data);
           if (data != null) {
             this.sendPassService
               .changePassUserThenForgotPass(data)
               .subscribe((dataMail) => {
                 this.checkSendMail = dataMail;
-                console.log('da gui mail roi', dataMail);
                 this.checkSendMail = true;
               });
           } else {

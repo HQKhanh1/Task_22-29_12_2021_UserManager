@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
       this.username = this.formLogin.value.username;
       this.password = this.formLogin.value.password;
 
-      console.log('username: ', this.username);
-      console.log('password: ', this.password);
 
       this.loginService
         .authenticate(
@@ -46,20 +44,14 @@ export class LoginComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            console.log('Data login', data);
             if (data) {
               let authString =
                 'Basic ' + btoa(this.username + ':' + this.password);
               sessionStorage.setItem('username', this.username);
               sessionStorage.setItem('basicauth', authString);
-              console.log(
-                'token trong login',
-                sessionStorage.getItem('basicauth')
-              );
               this.http
                 .getUserByUsername(this.username)
                 .subscribe((data: User) => {
-                  console.log('ROLE NAME: ', data.roleName);
                   sessionStorage.setItem('rolename', data.roleName);
                   if (data.roleName === 'ROLE_ADMIN') {
                     this.router.navigate(['home']);

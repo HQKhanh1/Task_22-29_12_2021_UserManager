@@ -10,13 +10,22 @@ export class FooterComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-
-  public homepage() :string {
-    console.log('role ne: ', sessionStorage.getItem('rolename'))
+  public loadAboutUs(){
+    location.href = 'https://www.facebook.com/hqkhanh0405/';
+  }
+  public loadHome(): any {
     if (sessionStorage.getItem('rolename') === 'ROLE_ADMIN') {
-      return 'home';
+      if (location.href === 'http://localhost:4200/home') {
+        location.reload();
+      } else {
+        this.router.navigate(['home']);
+      }
     } else {
-      return 'viewuser';
+      if (location.href === 'http://localhost:4200/viewuser') {
+        location.reload();
+      } else {
+        this.router.navigate(['viewuser']);
+      }
     }
   }
 }
