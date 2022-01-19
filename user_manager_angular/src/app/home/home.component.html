@@ -64,8 +64,10 @@
           <td style="text-align: center">{{data.email}}</td>
           <td style="text-align: center">{{showRole(data.roleName)}}</td>
           <td class="text-center">
-            <button class='btn btn-primary' (click)="detail(data.username)"><i class="fa fa-wrench"></i></button> &nbsp;
-            <button class='btn btn-danger' (click)="delete(data)"><i class="fa fa-trash"></i></button>
+            <button class='btn btn-primary' [disabled]="checckAcc(data.username)" (click)="detail(data.username)"><i
+                class="fa fa-wrench"></i></button> &nbsp;
+            <button class='btn btn-danger' [disabled]="checckAcc(data.username)" (click)="delete(data)"><i
+                class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>

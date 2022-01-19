@@ -8,15 +8,17 @@
       <input style="color: grey;" type="text" placeholder="Username" readonly value="{{formEditUser.value.username}}" />
     </div>
     <div class="u-form-group">
-      <mat-label style="margin-right: 85px ;">
+      <mat-label style="margin-right: 85px; color: grey;">
         <a>First name</a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a>Last name</a>
       </mat-label>
       <br>
-      <input type="text-name" placeholder="Firstname" formControlName="firstname" value="{{formEditUser.value.firstname}}" />
+      <input type="text-name" style="color: grey;" placeholder="Firstname" readonly formControlName="firstname"
+        value="{{formEditUser.value.firstname}}" />
       &nbsp;
-      <input type="text-name" placeholder="Lastname" formControlName="lastname" value="{{formEditUser.value.lastname}}" />
+      <input type="text-name" style="color: grey;" placeholder="Lastname" readonly formControlName="lastname"
+        value="{{formEditUser.value.lastname}}" />
     </div>
     <div class="u-form-group">
       <mat-error class="alert-danger" *ngIf="formEditUser.get('firstname')?.errors && submitted">
@@ -25,8 +27,9 @@
         Lastname is required</mat-error>
     </div>
     <div class="u-form-group">
-      <mat-label style="margin-right: 290px;">Email</mat-label>
-      <input type="email" placeholder="Email" email formControlName="email" value="{{formEditUser.value.email}}" />
+      <mat-label style="margin-right: 290px; color: grey;">Email</mat-label>
+      <input type="email" style="color: grey;" readonly placeholder="Email" email formControlName="email"
+        value="{{formEditUser.value.email}}" />
     </div>
     <div class="u-form-group">
       <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['required'] && submitted">

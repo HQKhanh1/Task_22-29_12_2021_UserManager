@@ -11,7 +11,7 @@ import { HttpServiceService } from 'src/service/http-service.service';
 })
 export class HomeComponent implements OnInit {
   user: User[] = [];
-  public searchText : any;
+  public searchText: any;
   indexPagination: number = 1;
   public searchUser: FormGroup = new FormGroup({});
   listUserNotPagination: User[] = [];
@@ -204,5 +204,12 @@ export class HomeComponent implements OnInit {
   public detail(username: string) {
     console.log('username: ', username);
     this.router.navigate(['detail', username]);
+  }
+  public checckAcc(username: string): boolean {
+    if (username === sessionStorage.getItem('username')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
