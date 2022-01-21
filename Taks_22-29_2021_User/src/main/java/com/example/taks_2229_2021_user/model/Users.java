@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Entity
 @Table(name = "demouser")
-public class Users extends AuditorUser<String> {
+public class Users{
     public Users(String username, String password, String firstname, String lastname, String email) {
         this.username = username;
         this.password = password;

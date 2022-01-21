@@ -19,10 +19,10 @@ public class MailConfig {
     @Value("dangtinnhatroCongNghePhanMem@gmail.com")
     private String email;
 
-    @Value("@A123456")
+    @Value("etgftvojubmlsokz")
     private String password;
 
-    @Value("false")
+    @Value("true")
     private String isSSL;
 
     @Bean
@@ -39,7 +39,7 @@ public class MailConfig {
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.enable", isSSL);
+        props.put("mail.smtp.starttls.enable", isSSL);
         props.put("mail.smtp.from", email);
         props.put("mail.debug", "true");
 

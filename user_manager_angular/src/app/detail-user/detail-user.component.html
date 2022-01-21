@@ -34,7 +34,7 @@
     <div class="u-form-group">
       <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['required'] && submitted">
         Email is required</mat-error>
-      <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['email'] && submitted">
+      <mat-error class="alert-danger" *ngIf="formEditUser.get('email')?.errors?.['pattern'] && submitted">
         Email is invalidate</mat-error>
     </div>
     <div class="u-form-group">

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -98,9 +97,9 @@ public class UsersServiceImpl implements UsersService {
                 : Sort.by(sortBy).descending();
 
         // create Pageable instance
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+//        Pageable pageable = ;
 
-        Page<Users> users = usersRepository.findAll(pageable);
+        Page<Users> users = usersRepository.findAll(PageRequest.of(pageNo, pageSize, sort));
 
         // get content for page object
         List<Users> listOfPosts = users.getContent();
@@ -134,13 +133,21 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Users signupUser(Users users) throws UsernameExitException, MailException {
+        checkEmailOrUsername(users);
+        users.setPassword(BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12)));
+        clientService.signup(users);
+        usersRepository.save(users);
+        return users;
+    }
     public Users createUser(Users users) throws UsernameExitException, MailException {
         checkEmailOrUsername(users);
+        users.setPassword(DataUtils.generateTempPwd(8));
+        clientService.create(users, users.getPassword());
         users.setPassword(BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12)));
         usersRepository.save(users);
         return users;
     }
-
     @Override
     public Boolean changePassUserThenForgotPas(Users users) {
         users.setPassword(DataUtils.generateTempPwd(8));

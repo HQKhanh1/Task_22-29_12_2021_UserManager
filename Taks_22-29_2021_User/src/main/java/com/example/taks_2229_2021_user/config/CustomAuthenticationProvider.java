@@ -10,12 +10,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Service
-@CrossOrigin(origins = "**")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UsersRepository usersRepository;

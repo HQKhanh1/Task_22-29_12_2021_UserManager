@@ -12,14 +12,26 @@ import java.util.List;
 
 public interface UsersService {
     UserDto createUserMap(UserDto userDto);
+
     UserResponse getAllUsersPage(int pageNo, int pageSize, String sortBy, String sortDir);
+
     Users getUserByUserName(String name) throws UsernameException;
+
     List<Users> getAllUsers();
+
+    Users signupUser(Users users) throws UsernameExitException, MailException;
+
     Users createUser(Users users) throws UsernameExitException, MailException;
+
     Users updateUser(String userName, Users users) throws UsernameException, UsernameExitException, MailException;
+
     Users deleteUser(String name) throws UsernameException;
+
     Users checkMailForgotPass(String email);
+
     Boolean checkPassword(String password, String username) throws UsernameException;
+
     Boolean changePassword(String password, String username) throws UsernameException, JsonProcessingException;
+
     Boolean changePassUserThenForgotPas(Users users);
 }

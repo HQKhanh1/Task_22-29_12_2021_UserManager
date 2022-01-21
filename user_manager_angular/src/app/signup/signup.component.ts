@@ -32,7 +32,10 @@ export class SignupComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9](.?[a-z0-9]){0,}@g(oogle)?mail.com$'),
+      ]),
       pass: new FormControl('', [Validators.required]),
       confPass: new FormControl('', [Validators.required]),
     });
@@ -50,8 +53,6 @@ export class SignupComponent implements OnInit {
         if (data.statusCode) {
           this.error = this.messageError.messageError(data.statusCode);
         } else {
-          this.signUpService.sendMail(this.user).subscribe((data: any) => {
-          });
           if (confirm('Successful registration, please login!')) {
             this.router.navigate(['login']);
           }

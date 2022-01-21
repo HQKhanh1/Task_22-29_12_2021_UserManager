@@ -55,23 +55,23 @@
       <h3>{{searchResult}}</h3>
     </div>
     <table *ngIf="!searchResult" matSort (matSortChange)="sortData($event)" class="table table-hover table-bordered">
-      <thead>
-        <tr class="bg-table-header">
-          <th mat-sort-header="username">Username</th>
+      <thead style="align-items: center;">
+        <tr class="bg-table-header" style="text-align: left;">
+          <th mat-sort-header="username" >Username</th>
           <th mat-sort-header="firstname">First name</th>
           <th mat-sort-header="lastname" >Last name</th>
           <th mat-sort-header="email" >Email</th>
-          <th mat-sort-header="role" >Role</th>
-          <th>Actions</th>
+          <th mat-sort-header="role">Role</th>
+          <th class="text-center">Actions</th>
         </tr>
       </thead>
-      <tbody style="font-size: 16px;text-align: center">
+      <tbody style="font-size: 16px;">
         <tr *ngFor="let data of sortedData ">
-          <td style="text-align: center">{{data.username}}</td>
-          <td style="text-align: center">{{data.firstname}}</td>
-          <td style="text-align: center">{{data.lastname }}</td>
-          <td style="text-align: center">{{data.email}}</td>
-          <td style="text-align: center">{{showRole(data.roleName)}}</td>
+          <td>{{data.username}}</td>
+          <td>{{data.firstname}}</td>
+          <td>{{data.lastname }}</td>
+          <td>{{data.email}}</td>
+          <td>{{showRole(data.roleName)}}</td>
           <td class="text-center">
             <button class='btn btn-primary' [disabled]="checckAcc(data.username)" (click)="detail(data.username)"><i
                 class="fa fa-wrench"></i></button> &nbsp;

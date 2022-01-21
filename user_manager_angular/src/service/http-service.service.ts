@@ -134,17 +134,18 @@ export class HttpServiceService {
       this.nowHttpOption
     );
   }
-  public sendMail(user: User): Observable<any> {
-    return this.httpClient
-      .post<any>(
-        this.REST_API_SERVER + '/sendmail',
-        JSON.stringify(user),
-        this.nowHttpOption
-      )
-      .pipe(
-        map((userData) => {
-          return userData;
-        })
-      );
+
+  public createUser(user: User): Observable<any> {
+    this.headers = sessionStorage.getItem('basicauth');
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.headers,
+      }).set('Content-Type', 'application/json'),
+    };
+    return this.httpClient.post<any>(
+      this.REST_API_SERVER + '/create',
+      JSON.stringify(user),
+      this.httpOptions
+    );
   }
 }

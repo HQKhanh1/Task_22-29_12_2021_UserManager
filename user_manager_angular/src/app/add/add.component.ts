@@ -31,9 +31,10 @@ export class AddComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      pass: new FormControl('', [Validators.required]),
-      confPass: new FormControl('', [Validators.required])
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9](.?[a-z0-9]){0,}@g(oogle)?mail.com$'),
+      ])
     });
   }
   checkPasswords(): boolean {
@@ -43,25 +44,21 @@ export class AddComponent implements OnInit {
       ? true
       : false;
   }
-  public onChange() {
-  }
-  public signUp() {
+  public onChange() {}
+  public addUser() {
     this.submitted = true;
-    if (this.formCreate.valid && this.checkPasswords() && this.selectRole != '') {
       this.user.username = this.formCreate.value.username;
       this.user.firstname = this.formCreate.value.firstname;
       this.user.lastname = this.formCreate.value.lastname;
       this.user.email = this.formCreate.value.email.toLowerCase();
-      this.user.password = this.formCreate.value.pass;
+      this.user.password = 'none';
       this.user.roleName = this.selectRole;
-      this.signUpService.signUpUser(this.user).subscribe((data: any) => {
+      this.signUpService.createUser(this.user).subscribe((data: any) => {
         this.error = this.messageError.messageError(data.statusCode);
         if (!data.statusCode) {
+          alert('Successfully create new user!')
         }
       });
-
-
-    }
   }
   public goBack() {
     history.back();

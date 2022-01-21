@@ -15,7 +15,10 @@ export class InfoComponent implements OnInit {
     username: new FormControl(''),
     firstname: new FormControl('', [Validators.required]),
     lastname: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9](.?[a-z0-9]){0,}@g(oogle)?mail.com$'),
+    ]),
     role: new FormControl(''),
   });
   public username!: string;
@@ -43,7 +46,7 @@ export class InfoComponent implements OnInit {
         lastname: new FormControl(this.user.lastname, [Validators.required]),
         email: new FormControl(this.user.email, [
           Validators.required,
-          Validators.email,
+          Validators.pattern('^[a-z0-9](.?[a-z0-9]){0,}@g(oogle)?mail.com$'),
         ]),
         role: new FormControl(this.user.roleName),
       });

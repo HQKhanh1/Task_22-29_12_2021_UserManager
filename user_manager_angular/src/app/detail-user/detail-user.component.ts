@@ -17,7 +17,10 @@ export class DetailUserComponent implements OnInit {
     username: new FormControl(''),
     firstname: new FormControl('', [Validators.required]),
     lastname: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9](.?[a-z0-9]){0,}@g(oogle)?mail.com$'),
+    ]),
     role: new FormControl(''),
   });
   public submitted: boolean = false;
@@ -56,8 +59,7 @@ export class DetailUserComponent implements OnInit {
     });
   }
 
-  public onChange() {
-  }
+  public onChange() {}
   public update() {
     this.submitted = true;
     if (this.formEditUser.valid) {

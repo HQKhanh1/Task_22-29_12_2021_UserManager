@@ -2,7 +2,6 @@ package com.example.taks_2229_2021_user.service.impl;
 
 import com.example.taks_2229_2021_user.model.Users;
 import com.example.taks_2229_2021_user.payload.DataMailDTO;
-import com.example.taks_2229_2021_user.payload.UserDto;
 import com.example.taks_2229_2021_user.service.ClientService;
 import com.example.taks_2229_2021_user.service.MailService;
 import com.example.taks_2229_2021_user.util.Const;
@@ -19,7 +18,7 @@ public class ClientServiceImpl implements ClientService {
     private MailService mailService;
 
     @Override
-    public Boolean create(UserDto sdi) {
+    public Boolean signup(Users sdi) {
         try {
             DataMailDTO dataMail = new DataMailDTO();
 
@@ -33,6 +32,28 @@ public class ClientServiceImpl implements ClientService {
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
+            return true;
+        } catch (MessagingException exp) {
+            exp.printStackTrace();
+        }
+        return false;
+    }
+    @Override
+    public Boolean create(Users sdi, String password) {
+        try {
+            DataMailDTO dataMail = new DataMailDTO();
+
+            dataMail.setTo(sdi.getEmail());
+            dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_CREATE_USER);
+
+            Map<String, Object> props = new HashMap<>();
+            props.put("firstname", sdi.getFirstname());
+            props.put("lastname", sdi.getLastname());
+            props.put("username", sdi.getUsername());
+            props.put("password", password);
+            dataMail.setProps(props);
+
+            mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_CREATE_USER);
             return true;
         } catch (MessagingException exp) {
             exp.printStackTrace();

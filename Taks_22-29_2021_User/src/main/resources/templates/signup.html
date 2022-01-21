@@ -10,11 +10,15 @@
         }
     </style>
 </head>
-<body style="background-color: beige">
+<body>
 <p th:text="${'Hi, ' + firstname + ' ' + lastname + '!'}"></p>
 <p> You have just successfully registered an account on the system </p>
 <p> We send your system access information: </p>
-<p th:text="${'- Username: ' + username }"></p>
+<ul>
+    <li>
+        <p th:text="${'Username: ' + username }"></p>
+    </li>
+</ul>
 <p>This is an automated email, please do not reply.</p>
 </body>
 </html>

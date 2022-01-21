@@ -46,30 +46,26 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping("/page")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        return new ResponseEntity<>(usersService.createUserMap(userDto), HttpStatus.CREATED);
-    }
+//    @PostMapping("/page")
+//    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+//        return new ResponseEntity<>(usersService.createUserMap(userDto), HttpStatus.CREATED);
+//    }
+
     @GetMapping("/checkemail/{email}")
-    public ResponseEntity<Users> findUsersByEmail(@PathVariable String email){
+    public ResponseEntity<Users> findUsersByEmail(@PathVariable String email) {
         return new ResponseEntity<Users>(usersService.checkMailForgotPass(email), HttpStatus.OK);
     }
+
     @PostMapping("/changePassForgot")
-    public ResponseEntity<Boolean> changePassUserThenForgotPas(@RequestBody Users users){
+    public ResponseEntity<Boolean> changePassUserThenForgotPas(@RequestBody Users users) {
         return new ResponseEntity<>(usersService.changePassUserThenForgotPas(users), HttpStatus.OK);
     }
-    @PostMapping("/sendmail")
-    public ResponseEntity<Boolean> create(@RequestBody UserDto sdi) {
-        return ResponseEntity.ok(clientService.create(sdi));
-    }
+
+    //maybe delete
+
 
     @GetMapping("/page")
-    public UserResponse getAllUsers(
-            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
-    ) {
+    public UserResponse getAllUsers(@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize, @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
         return usersService.getAllUsersPage(pageNo, pageSize, sortBy, sortDir);
     }
 
@@ -85,28 +81,30 @@ public class UserController {
     }
 
     @GetMapping("/check/{username}/{password}")
-    public ResponseEntity<Boolean> checkPassword(
-            @PathVariable("username") String name,
-            @PathVariable("password") String password) throws UsernameException {
-        return  new ResponseEntity<Boolean>(usersService.checkPassword(password,name), HttpStatus.OK);
+    public ResponseEntity<Boolean> checkPassword(@PathVariable("username") String name, @PathVariable("password") String password) throws UsernameException {
+        return new ResponseEntity<Boolean>(usersService.checkPassword(password, name), HttpStatus.OK);
     }
 
     @PostMapping("signup")
     public ResponseEntity<Users> signup(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
-        return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
+        return new ResponseEntity<>(usersService.signupUser(users), HttpStatus.OK);
     }
-    @PostMapping("")
+
+    @PostMapping("create")
     public ResponseEntity<Users> createUser(@RequestBody @Valid Users users) throws UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.createUser(users), HttpStatus.OK);
     }
+
     @PutMapping("/update/{username}")
     public ResponseEntity<Users> updateUser(@PathVariable("username") String name, @RequestBody @Valid Users users) throws UsernameException, UsernameExitException, MailException {
         return new ResponseEntity<>(usersService.updateUser(name, users), HttpStatus.OK);
     }
+
     @PutMapping("/change/{username}")
     public ResponseEntity<Boolean> changePassword(@PathVariable("username") String name, @RequestBody UserDto userDto) throws UsernameException, JsonProcessingException {
         return new ResponseEntity<>(usersService.changePassword(userDto.getPassword(), name), HttpStatus.OK);
     }
+
     @DeleteMapping("/{username}")
     public ResponseEntity<Users> deleteUser(@PathVariable("username") String name) throws UsernameException {
         return new ResponseEntity<>(usersService.deleteUser(name), HttpStatus.OK);
@@ -115,15 +113,7 @@ public class UserController {
     @Transactional
     @GetMapping(value = "/mapsearch", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Users>> get(
-            @And({
-                    @Spec(path = "username", params = "username", spec = Like.class),
-                    @Spec(path = "firstname", params = "firstname", spec = Like.class),
-                    @Spec(path = "lastname", params = "lastname", spec = Like.class),
-                    @Spec(path = "email", params = "email", spec = Like.class)
-            }) Specification<Users> spec,
-            Sort sort,
-            @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<Users>> get(@And({@Spec(path = "username", params = "username", spec = Like.class), @Spec(path = "firstname", params = "firstname", spec = Like.class), @Spec(path = "lastname", params = "lastname", spec = Like.class), @Spec(path = "email", params = "email", spec = Like.class)}) Specification<Users> spec, Sort sort, @RequestHeader HttpHeaders headers) {
         final PagingResponse response = userSearch.get(spec, headers, sort);
         return new ResponseEntity<>(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
     }
